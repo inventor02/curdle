@@ -17,22 +17,49 @@ int8_t index_of(char *haystack, char needle) {
   }
 }
 
+char *get_word() {
+  FILE *fp = fopen("words.txt", "r");
+  assert(fp != NULL);
+
+  char *words = calloc(CURDLE_WORD_LENGTH * CURDLE_WORD_LIST_LENGTH, sizeof(char));
+  uint32_t index = 0;
+  char *current_word;
+  while (fgets(current_word, CURDLE_WORD_LENGTH + 1, fp)) {
+    words[CURDLE_WORD_LENGTH * index] = *current_word;
+    index++;
+  }
+
+  char *word_of_today = malloc((CURDLE_WORD_LENGTH + 1) * sizeof(char));
+  strcpy(word_of_today, (words + get_current_word_index() * CURDLE_WORD_LENGTH));
+  free(words);
+  words = NULL;
+
+  return word_of_today;
+}
+
 /**
  * Creates a new game structure given the word that needs to be guessed.
  *
  * @param word the word that needs to be guessed
  * @return the new game structure
  */
-struct game game_init(char word[]) {
+struct game game_init(char *word) {
   struct game game = {
     .guesses = calloc(CURDLE_MAX_GUESSES, sizeof(struct guess)),
     .guesses_so_far = 0,
-    .word = *word,
+    .word = word,
     .valid_guesses = calloc(CURDLE_GUESS_LIST_LENGTH * CURDLE_WORD_LENGTH, sizeof(char))
   };
 
   FILE *fp = fopen("possible_guesses.txt", "r");
-  assert(fp != NU
+  assert(fp != NULL);
+
+  char *the_word;
+  uint32_t index = 0;
+  while (fgets(the_word, 6, fp)) {
+    game.valid_guesses[index * CURDLE_WORD_LENGTH] = *the_word;
+    index++;
+  }
 
   return game;
 }
@@ -52,6 +79,13 @@ uint32_t get_current_word_index() {
   return index;
 }
 
+/**
+ * Comparator for each letter of the guess and returns a guess struct.
+ *
+ * @param game is the current game
+ * @param current_guess is the guess just entered and the guess to compare
+ * @return the guess struct with each letter scored
+ */
 struct guess guess_comparator(struct game *game, char *current_guess) {
   char *word = game->word;
   enum guessed_letter_type *guess_scoring = calloc(CURDLE_WORD_LENGTH, sizeof(enum guessed_letter_type));
@@ -71,4 +105,5 @@ struct guess guess_comparator(struct game *game, char *current_guess) {
   };
   return guess;
 }
+
 

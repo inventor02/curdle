@@ -29,6 +29,8 @@ struct game {
   struct guess *guesses;
 };
 
+char *get_word();
+
 struct game game_init(char word[]);
 
 void game_destroy(struct game *game);
