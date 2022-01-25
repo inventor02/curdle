@@ -27,6 +27,8 @@ struct game {
 
 struct game game_init(char *word);
 
+void game_destroy(struct game *game);
+
 struct guess score_word(char *word);
 
 #endif // CURDLE_GAME_H

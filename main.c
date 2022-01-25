@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <SDL.h>
+#include "game.h"
 
 int main() {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
