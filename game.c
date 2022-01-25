@@ -32,8 +32,7 @@ struct game game_init(char word[]) {
   };
 
   FILE *fp = fopen("possible_guesses.txt", "r");
-  assert(fp != NULL);
-
+  assert(fp != NU
 
   return game;
 }
