@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <SDL.h>
+#include <time.h>
+#include <unistd.h>
 #include "game.h"
 
 int main() {
