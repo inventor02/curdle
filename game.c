@@ -35,7 +35,6 @@ struct game game_init(char word[]) {
   assert(fp != NULL);
 
 
-
   return game;
 }
 
@@ -54,14 +53,14 @@ uint32_t get_current_word_index() {
   return index;
 }
 
-struct guess guess_comparator(struct game *game, char *current_guess){
+struct guess guess_comparator(struct game *game, char *current_guess) {
   char *word = game->word;
   enum guessed_letter_type *guess_scoring = calloc(CURDLE_WORD_LENGTH, sizeof(enum guessed_letter_type));
-  for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
+  for (uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
     int8_t index = index_of(word, current_guess[i]);
-    if(index == -1){
+    if (index == -1) {
       guess_scoring[i] = NOT_IN_WORD;
-    } else if (word[index] == current_guess[i]){
+    } else if (word[index] == current_guess[i]) {
       guess_scoring[i] = IN_WORD_RIGHT_PLACE;
     } else {
       guess_scoring[i] = IN_WORD_WRONG_PLACE;
