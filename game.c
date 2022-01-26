@@ -7,6 +7,12 @@
 
 #include "game.h"
 
+/**
+ * A method to return the index of the first occurance of a specific letter in a string.
+ * @param haystack is the string in which to search for the needle
+ * @param needle is the character to search for
+ * @return the index of the first occurance of the letter
+ */
 int8_t index_of(char *haystack, char needle) {
   char *occurrence = strchr(haystack, needle);
 
@@ -17,6 +23,10 @@ int8_t index_of(char *haystack, char needle) {
   }
 }
 
+/**
+ * A method to open the word list and find the word for today using a pre-existing formula.
+ * @return the word for today
+ */
 char *get_word() {
   FILE *fp = fopen("words.txt", "r");
   assert(fp != NULL);
@@ -74,6 +84,10 @@ void game_destroy(struct game *game) {
   free(game);
 }
 
+/**
+ * Calculate the index of todays word.
+ * @return the index of today's word
+ */
 uint32_t get_current_word_index() {
   uint32_t index = floor((time(NULL) - CURDLE_EPOCH) / CURDLE_DAY_LENGTH);
   return index;
@@ -105,5 +119,3 @@ struct guess guess_comparator(struct game *game, char *current_guess) {
   };
   return guess;
 }
-
-
