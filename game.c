@@ -64,9 +64,14 @@ struct game game_init(char *word) {
   FILE *fp = fopen("possible_guesses.txt", "r");
   assert(fp != NULL);
 
+
+
+
+  
+  // WTF does the following do?
   char *the_word;
   uint32_t index = 0;
-  while (fgets(the_word, 6, fp)) {
+  while (fgets(the_word, CURDLE_WORD_LENGTH+1, fp)) {
     game.valid_guesses[index * CURDLE_WORD_LENGTH] = *the_word;
     index++;
   }

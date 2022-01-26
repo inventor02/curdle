@@ -35,6 +35,9 @@ int main() {
   SDL_RenderClear(renderer);
   SDL_RenderPresent(renderer);
 
+  // THIS LINE BREAKS EVERYTHING
+  struct game this_game = game_init(get_word());
+
   SDL_Delay(3000);
 
   SDL_DestroyWindow(window);
