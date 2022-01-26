@@ -67,7 +67,7 @@ struct game game_init(char *word) {
 
 
 
-  
+
   // WTF does the following do?
   char *the_word;
   uint32_t index = 0;
