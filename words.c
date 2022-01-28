@@ -3,10 +3,11 @@
 //
 
 #include "words.h"
-#include <stdbool.h>
 #include <math.h>
 #include <time.h>
 #include <stdint.h>
+#include "game.h"
+#include <stdbool.h>
 
 const char *possible_guess_words[] = {
   "aahed",
@@ -12991,8 +12992,8 @@ extern const char *words[] = {
  *
  * @return today's word
  */
-char *get_today_word() {
-  return words[floor((time(NULL) - CURDLE_EPOCH) / CURDLE_DAY_LENGTH)];
+const char *get_today_word() {
+  return words[(int)floor((time(NULL) - CURDLE_EPOCH) / CURDLE_DAY_LENGTH)];
 }
 
 /**

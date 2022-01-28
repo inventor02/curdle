@@ -22,18 +22,13 @@ struct guess {
 struct game {
   uint8_t guesses_so_far;
   char *word;
-  char *valid_guesses;
   struct guess *guesses;
 };
-
-char *get_word();
 
 struct game game_init(char *word);
 
 void game_destroy(struct game *game);
 
 struct guess guess_handler(struct game *game);
-
-uint32_t get_current_word_index();
 
 #endif // CURDLE_GAME_H

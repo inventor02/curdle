@@ -3,6 +3,7 @@
 #include <time.h>
 #include <unistd.h>
 #include "game.h"
+#include "words.h"
 
 int main() {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -36,7 +37,7 @@ int main() {
   SDL_RenderPresent(renderer);
 
   // THIS LINE BREAKS EVERYTHING
-  struct game this_game = game_init(get_word());
+  struct game this_game = game_init(get_today_word());
 
   SDL_Delay(3000);
 

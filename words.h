@@ -14,8 +14,8 @@
 extern const char *words[];
 extern const char *possible_guess_words[];
 
-char *get_today_word();
+const char *get_today_word();
 
-bool *is_valid_guess(char *word);
+bool is_valid_guess(char *word);
 
 #endif //CURDLE_WORDS_H

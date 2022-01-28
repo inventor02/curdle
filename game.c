@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
+#include "words.h"
 
 #include "game.h"
 
@@ -24,30 +25,6 @@ int8_t index_of(char *haystack, char needle) {
 }
 
 /**
- * A method to open the word list and find the word for today using a pre-existing formula.
- * @return the word for today
- */
-char *get_word() {
-  FILE *fp = fopen("words.txt", "r");
-  assert(fp != NULL);
-
-  char *words = calloc(CURDLE_WORD_LENGTH * CURDLE_WORD_LIST_LENGTH, sizeof(char));
-  uint32_t index = 0;
-  char *current_word;
-  while (fgets(current_word, CURDLE_WORD_LENGTH + 1, fp)) {
-    words[CURDLE_WORD_LENGTH * index] = *current_word;
-    index++;
-  }
-
-  char *word_of_today = malloc((CURDLE_WORD_LENGTH + 1) * sizeof(char));
-  strcpy(word_of_today, (words + get_current_word_index() * CURDLE_WORD_LENGTH));
-  free(words);
-  words = NULL;
-
-  return word_of_today;
-}
-
-/**
  * Creates a new game structure given the word that needs to be guessed.
  *
  * @param word the word that needs to be guessed
@@ -57,24 +34,8 @@ struct game game_init(char *word) {
   struct game game = {
     .guesses = calloc(CURDLE_MAX_GUESSES, sizeof(struct guess)),
     .guesses_so_far = 0,
-    .word = word,
-    .valid_guesses = calloc(CURDLE_GUESS_LIST_LENGTH * CURDLE_WORD_LENGTH, sizeof(char))
+    .word = word
   };
-
-  FILE *fp = fopen("possible_guesses.txt", "r");
-  assert(fp != NULL);
-
-
-
-
-
-  // WTF does the following do?
-  char *the_word;
-  uint32_t index = 0;
-  while (fgets(the_word, CURDLE_WORD_LENGTH+1, fp)) {
-    game.valid_guesses[index * CURDLE_WORD_LENGTH] = *the_word;
-    index++;
-  }
 
   return game;
 }
