@@ -7,9 +7,6 @@
 #define CURDLE_DAY_LENGTH 86400
 
 #define CURDLE_MAX_GUESSES 6
-#define CURDLE_WORD_LENGTH 5
-#define CURDLE_WORD_LIST_LENGTH 2315
-#define CURDLE_GUESS_LIST_LENGTH 10657
 
 enum guessed_letter_type {
   NOT_IN_WORD,
