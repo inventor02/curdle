@@ -113,13 +113,13 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer) {
       } else if (event.type == SDL_KEYDOWN) {
         // Game logic goes here
 
-        if (event.key.keysym.sym == SDLK_KP_ENTER) {
-          // Send the 'enter' to game logic
+          if (event.key.keysym.sym == SDLK_KP_ENTER) {
+            // Send the 'enter' to game logic
 
-        }else if (event.key.keysym.sym >= SDL_SCANCODE_A && event.key.keysym.sym <= SDL_SCANCODE_Z) {
-          // Send key sym to game logic
+          }else if (event.key.keysym.sym >= SDL_SCANCODE_A && event.key.keysym.sym <= SDL_SCANCODE_Z) {
+            // Send key sym to game logic
 
-        }
+          }
 
 
 
