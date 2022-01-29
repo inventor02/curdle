@@ -90,6 +90,7 @@ void append_letter(struct game *game, char current_letter){
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
     if(game->current_guess[i] == NULL){
       game->current_guess[i] = current_letter;
+      break;
     }
   }
 }
