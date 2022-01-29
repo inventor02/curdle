@@ -9,7 +9,7 @@
 #include "game.h"
 #include <stdbool.h>
 
-const char *possible_guess_words[] = {
+char *possible_guess_words[] = {
   "aahed",
   "aalii",
   "aargh",
@@ -10669,7 +10669,7 @@ const char *possible_guess_words[] = {
   "zymic"
 };
 
-extern const char *words[] = {
+char *words[] = {
   "cigar",
   "rebut",
   "sissy",
@@ -12992,7 +12992,7 @@ extern const char *words[] = {
  *
  * @return today's word
  */
-const char *get_today_word() {
+char *get_today_word() {
   return words[(int)floor((time(NULL) - CURDLE_EPOCH) / CURDLE_DAY_LENGTH)];
 }
 
