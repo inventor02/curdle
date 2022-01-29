@@ -1,5 +1,7 @@
 #include "render.h"
 #include <SDL2/SDL_ttf.h>
+#include <unistd.h>
+#include <limits.h>
 
 int start_window() {
 
@@ -38,19 +40,27 @@ int start_window() {
   // Clear window
   SDL_RenderClear(renderer);
 
-  
+  // Get the currentPath
+
+  char cwd[PATH_MAX+1];
+
+  getcwd(cwd, sizeof(cwd));
+
+
+  //strcat("/res/Robot-Black.ttf", cwd); - Not working don't know why probably not a pointer
+
 
 
   // Render Text??
 
   // Load font style and set size
-  TTF_Font* curdle_font = TTF_OpenFont(CURDLE_TEXT_FONT, CURDLE_TEXT_SIZE);
+  TTF_Font* curdle_font = TTF_OpenFont("../res/Roboto-Black.ttf", 24);
 
   // Load custom text colour
   SDL_Color curdle_font_colour = {CURDLE_TEXT_COLOUR_R, CURDLE_TEXT_COLOUR_G, CURDLE_TEXT_COLOUR_B, 255};
 
   // Create a surface to render the text onto?
-  SDL_Surface* surface_text = TTF_RenderText_Solid(curdle_font, "hello world", curdle_font_colour);
+  SDL_Surface* surface_text = TTF_RenderText_Solid( curdle_font, "hello world", curdle_font_colour);
 
   // Convert the surface into a texture
   SDL_Texture* texture_text = SDL_CreateTextureFromSurface(renderer, surface_text);

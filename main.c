@@ -8,7 +8,7 @@
 
 int main() {
 
-  printf("Hello World!");
+  printf("Hello World!\n");
   start_window();
 
   return 0;

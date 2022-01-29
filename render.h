@@ -9,7 +9,7 @@
 #define CURDLE_TEXT_COLOUR_G 255
 #define CURDLE_TEXT_COLOUR_B 255
 
-#define CURDLE_TEXT_FONT "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+#define CURDLE_TEXT_FONT "./res/Roboto-Black.ttf"
 #define CURDLE_TEXT_SIZE 96
 
 #define CURDLE_SDL_INITILISATION_FAILURE 1
