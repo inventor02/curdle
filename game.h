@@ -37,6 +37,6 @@ struct game game_init(char *word);
 
 void game_destroy(struct game *game);
 
-struct guess guess_handler(struct game *game);
+struct guess guess_comparator(struct game *game);
 
 #endif // CURDLE_GAME_H

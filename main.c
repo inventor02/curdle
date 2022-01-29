@@ -10,7 +10,5 @@ int main() {
 
   start_window();
 
-  struct game this_game = game_init(get_today_word());
-
   return 0;
 }

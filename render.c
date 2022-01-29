@@ -2,6 +2,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <unistd.h>
 #include <limits.h>
+#include "game.h"
+#include "words.h"
 
 int start_window() {
 
@@ -101,6 +103,8 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer) {
 
   // Create our event
   SDL_Event event;
+  struct game game = game_init(get_today_word());
+  struct game *game_ptr = &game;
 
   while (1) {
     // Poll events
@@ -114,11 +118,11 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer) {
         // Game logic goes here
 
           if (event.key.keysym.sym == SDLK_KP_ENTER) {
-            // Send the 'enter' to game logic
+            guess_comparator(game_ptr);
+            reset_guess(game_ptr);
 
           }else if (event.key.keysym.sym >= SDL_SCANCODE_A && event.key.keysym.sym <= SDL_SCANCODE_Z) {
-            // Send key sym to game logic
-
+            append_letter(game_ptr, key_to_char(event.key.keysym.sym));
           }
 
 

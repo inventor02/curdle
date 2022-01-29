@@ -76,8 +76,9 @@ uint32_t get_current_word_index() {
  * @param current_guess is the guess just entered and the guess to compare
  * @return the guess struct with each letter scored
  */
-struct guess guess_comparator(struct game *game, char *current_guess) {
+struct guess guess_comparator(struct game *game) {
   char *word = game->word;
+  char *current_guess = game->current_guess;
   enum guessed_letter_type *guess_scoring = calloc(CURDLE_WORD_LENGTH, sizeof(enum guessed_letter_type));
   for (uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
     int8_t index = index_of(word, current_guess[i]);

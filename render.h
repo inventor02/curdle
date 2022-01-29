@@ -26,6 +26,6 @@ int start_window();
 
 void draw_rect(SDL_Renderer* renderer);
 
-int event_poll(SDL_Window* window, SDL_Renderer* renderer);
+int event_poll(SDL_Window *window, SDL_Renderer *renderer);
 
 #endif // Curdle Render Header
