@@ -23,6 +23,7 @@ struct game {
   uint8_t guesses_so_far;
   char *word;
   struct guess *guesses;
+  char *current_guess
 };
 
 struct game game_init(char *word);
