@@ -8,7 +8,6 @@
 
 int main() {
 
-  printf("Hello World!\n");
   start_window();
 
   // THIS LINE BREAKS EVERYTHING
