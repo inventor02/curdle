@@ -1,12 +1,12 @@
 CC=gcc
 CFLAGS=-lSDL2
 DEPS = game.h
-OBJ = main.o game.o
+OBJ = main.o game.o words.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -g -o $@ $< $(CFLAGS)
 
-main: main.o game.o
+main: main.o game.o words.o
 	$(CC) -g -o main main.o game.o $(CFLAGS)
 
 game: game.o
