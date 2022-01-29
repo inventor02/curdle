@@ -4,8 +4,15 @@
 #include <unistd.h>
 #include "game.h"
 #include "words.h"
+#include "render.h"
 
 int main() {
+
+  printf("Hello World!");
+  start_window();
+
+  return 0;
+
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     printf("error init sdl: %s\n", SDL_GetError());
     return EXIT_FAILURE;

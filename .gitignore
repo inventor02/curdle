@@ -116,3 +116,8 @@ modules.xml
 # End of https://www.toptal.com/developers/gitignore/api/cmake,jetbrains+all
 
 *.o
+
+# VSCode
+
+build/*
+
