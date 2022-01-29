@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 project(curdle C)
 
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_MODULE_PATH "/home/adamc/repos/curdle/find")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/find)
 
 find_package(PkgConfig REQUIRED)
 find_package(SDL2TTF REQUIRED)
