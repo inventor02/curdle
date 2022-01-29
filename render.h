@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-#define CURDLE_WINDOW_SCALE 8
+#define CURDLE_WINDOW_SCALE 4
 
 #define CURDLE_TEXT_COLOUR_R 255
 #define CURDLE_TEXT_COLOUR_G 255
@@ -19,8 +19,8 @@
 
 /**
  * Initialises SDL and draws to the window.
- * 
- * @return int error code. 
+ *
+ * @return int error code.
  */
 int start_window();
 void draw_rect(SDL_Renderer* renderer);
