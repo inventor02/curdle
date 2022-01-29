@@ -7,7 +7,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/find)
 find_package(PkgConfig REQUIRED)
 find_package(SDL2TTF REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)
-#pkg_check_modules(SDL2_ttf REQUIRED SDL2_ttf)
 
 add_executable(curdle main.c game.c render.c game.h render.h words.c words.h)
 
