@@ -7,7 +7,7 @@ OBJ = main.o game.o words.o
 	$(CC) -c -g -o $@ $< $(CFLAGS)
 
 main: main.o game.o words.o
-	$(CC) -g -o main main.o game.o $(CFLAGS)
+	$(CC) -g -o main main.o game.o words.o $(CFLAGS)
 
 game: game.o
 	$(CC) -g -o game game.o $(CFLAGS)
