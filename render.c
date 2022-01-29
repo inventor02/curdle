@@ -82,11 +82,12 @@ int start_window() {
   
 
 
-  SDL_Delay(10000); //pause for 3 seconds
+  event_poll(window, renderer);
 
 
-  // Close and destroy the window
+  // Close and destroy the window and renderer
   SDL_DestroyWindow(window);
+  SDL_DestroyRenderer(renderer);
 
   TTF_Quit();
 
@@ -94,6 +95,26 @@ int start_window() {
   SDL_Quit();
 
   return EXIT_SUCCESS;
+}
+
+int event_poll(SDL_Window* window, SDL_Renderer* renderer) {
+
+  // Create our event
+  SDL_Event event;
+
+  while (1) {
+    // Get the next event
+    if (SDL_PollEvent(&event)) {
+      // If we have an event
+
+      if (event.type == SDL_QUIT) {
+        // Break out of our loop
+        break;
+      }
+    }
+  }
+
+
 }
 
 
