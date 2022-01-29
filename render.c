@@ -103,15 +103,35 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer) {
   SDL_Event event;
 
   while (1) {
-    // Get the next event
+    // Poll events
     if (SDL_PollEvent(&event)) {
       // If we have an event
 
       if (event.type == SDL_QUIT) {
         // Break out of our loop
         break;
+      } else if (event.type == SDL_KEYDOWN) {
+        // Game logic goes here
+
+        if (event.key.keysym.sym == SDLK_KP_ENTER) {
+          // Send the 'enter' to game logic
+
+        }else if (event.key.keysym.sym > 96 && event.key.keysym.sym < 123) {
+          // Send key sym to game logic
+
+        }
+
+
+
+        // Ask for the latest current word and update the graphics accordingly
       }
     }
+
+
+    // Render Logic Goes Here
+
+
+    // Rendering goes here
   }
 
 
