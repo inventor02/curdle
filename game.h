@@ -26,6 +26,10 @@ struct game {
   char *current_guess;
 };
 
+void append_letter(struct game *game, char current_letter);
+
+void reset_guess(struct game *game);
+
 struct game game_init(char *word);
 
 void game_destroy(struct game *game);
