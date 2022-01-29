@@ -135,6 +135,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer) {
     // Render Logic Goes Here
 
 
+
     // Rendering goes here
   }
 
