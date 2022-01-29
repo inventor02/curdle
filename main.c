@@ -10,7 +10,6 @@ int main() {
 
   start_window();
 
-  // THIS LINE BREAKS EVERYTHING
   struct game this_game = game_init(get_today_word());
 
   return 0;
