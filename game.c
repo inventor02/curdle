@@ -9,6 +9,16 @@
 #include "game.h"
 
 /**
+ * Converts an SDL key code into a character.
+ *
+ * @param  keycode the SDL key code to convert
+ * @return         the character the SDL code corresponds to
+ */
+char key_to_char(SDL_Keycode keycode) {
+  return (char) (97 + (keycode - SDLK_a));
+}
+
+/**
  * A method to return the index of the first occurance of a specific letter in a string.
  * @param haystack is the string in which to search for the needle
  * @param needle is the character to search for
