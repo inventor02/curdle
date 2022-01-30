@@ -125,7 +125,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
         // Game logic goes here
 
           if (event.key.keysym.sym == SDLK_KP_ENTER) {
-            append_guess(game_ptr, game.guesses_so_far, guess_comparator(game_ptr));
+            append_guess(game_ptr);
             reset_guess(game_ptr);
             game.guesses_so_far++;
 

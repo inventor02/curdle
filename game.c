@@ -112,6 +112,6 @@ void reset_guess(struct game *game){
   }
 }
 
-void append_guess(struct game *game, uint8_t guess_number, struct guess this_guess){
-  game->guesses[guess_number] = this_guess;
+void append_guess(struct game *game){
+  game->guesses[game->guesses_so_far] = guess_comparator(game);
 }
