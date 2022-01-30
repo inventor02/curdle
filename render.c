@@ -101,6 +101,16 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
   // Create our event
   SDL_Event event;
   struct game game = game_init(get_today_word());
+
+  /**
+   * USED FOR TESTING
+   *
+   * DELETE LATER!!!!!!!!!!!!!!
+   */
+  printf("%s\n", game.word);
+
+
+
   struct game *game_ptr = &game;
 
   while (1) {
@@ -192,7 +202,7 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
   // 6 rows - Make 9 rows with one row of pixels shared between the rows
   // 240px / 10 = 24
   // Rows numbered from 0-5
-  
+
   // Columns
   // 135px / 9 = 15
   // 2 columns either side, with
@@ -216,8 +226,8 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
   case RIGHT_RIGHT_POSITION:
     SDL_SetRenderDrawColor(renderer, 255, 102, 128, 255);
     break;
-  
-  default: 
+
+  default:
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     break;
   }
