@@ -3,6 +3,7 @@ project(curdle C)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/find)
+set(CMAKE_BUILD_TYPE Debug)
 
 find_package(PkgConfig REQUIRED)
 find_package(SDL2TTF REQUIRED)
