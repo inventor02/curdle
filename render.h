@@ -2,6 +2,8 @@
 #define CURDLE_RENDER_H
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL.h>
+#include <stdint.h>
+#include "game.h"
 
 #define CURDLE_WINDOW_SCALE 4
 
@@ -34,15 +36,15 @@ int start_window();
 void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font);
 
 /**
- * Draws a simple rectangle to the window - used for testing purposes only 
- * 
+ * Draws a simple rectangle to the window - used for testing purposes only
+ *
  * @param renderer the renderer to use when drawing the triangle
  */
 void draw_rect(SDL_Renderer* renderer);
 
 /**
  * Starts the window and main game loop, which includes rendering, event polling and game logic calls
- * 
+ *
  * @param window the window to render to
  * @param renderer the renderer we are using to render to the window
  * @param font the font we are using for our tiles
@@ -52,8 +54,8 @@ int event_poll(SDL_Window *window, SDL_Renderer *renderer, TTF_Font* font);
 
 /**
  * Draws a tile to the specified row and column, taking into account the window scale
- * 
- * @param tile a rectangle object to reduce memory usage 
+ *
+ * @param tile a rectangle object to reduce memory usage
  * @param renderer the renderer used to draw the tile
  * @param type the type of letter
  * @param row the row of the tile

@@ -3,6 +3,7 @@
 #include <limits.h>
 #include "game.h"
 #include "words.h"
+#include <stdint.h>
 
 int start_window() {
 
