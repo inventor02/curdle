@@ -9,7 +9,7 @@ find_package(PkgConfig REQUIRED)
 find_package(SDL2TTF REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)
 
-add_executable(curdle main.c game.c render.c game.h render.h words.c words.h)
+add_executable(curdle main.c game.c render.c game.h render.h words.c words.h statistics.c statistics.h)
 
 target_link_libraries(curdle ${SDL2_LIBRARIES} ${SDL2TTF_LIBRARY})
 target_include_directories(curdle PUBLIC ${SDL2_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIR})

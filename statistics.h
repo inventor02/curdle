@@ -1,0 +1,35 @@
+#ifndef CURDLE_STATISTICS_H
+#define CURDLE_STATISTICS_H
+
+#include "game.h"
+
+#include <time.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+#define CURDLE_STATISTICS_FILE_PATH "~/.curdle/curdle_statistics"
+
+struct game_statistics {
+  time_t start_time;
+  time_t end_time;
+  time_t game_duration;
+};
+
+struct average_statistics {
+  time_t average_time;
+  uint32_t guess_number_totals[CURDLE_MAX_GUESSES];
+  uint32_t number_of_games_played;
+  uint32_t number_of_games_won;
+};
+
+bool statistics_init(struct game_statistics *stats);
+
+void statistics_start_game(struct game_statistics *stats);
+
+void statistics_end_game(struct game_statistics *stats,
+  struct average_statistics *average_stats,
+  uint8_t number_of_guesses, bool was_word_guessed);
+
+void statistics_destroy();
+
+#endif
