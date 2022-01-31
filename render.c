@@ -112,6 +112,8 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
 
 
   struct game *game_ptr = &game;
+  SDL_Rect rect;
+  SDL_Rect* tile = &rect;
 
   while (1) {
     // Poll events
@@ -145,6 +147,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
     }
 
 
+
     // Render Logic Goes Here
 
 
@@ -157,30 +160,52 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
     // Clear window
     SDL_RenderClear(renderer);
 
-    SDL_Rect tile;
-    // Render test tile?
+    // Loop through the guesses
+    for (uint8_t guess = 0; guess < game_ptr->guesses_so_far; guess++) {
+      draw_guess(&game_ptr->guesses[guess], guess, tile, renderer, font);
+    }
 
+    // Render test tile?
+    /*
     char test_char_y[2] = {'Y','\0'};
     char test_char_o[2] = {'O', '\0'};
-    draw_tile(&tile, renderer, RIGHT_WRONG_POSITION, 0, 0, test_char_y, font);
-    draw_tile(&tile, renderer, RIGHT_RIGHT_POSITION, 0, 1, test_char_o, font);
-    draw_tile(&tile, renderer, WRONG, 0, 2, test_char_y, font);
-    draw_tile(&tile, renderer, WRONG, 0, 3, test_char_o, font);
-    draw_tile(&tile, renderer, RIGHT_RIGHT_POSITION, 0, 4, test_char_y, font);
+    draw_tile(tile, renderer, RIGHT_WRONG_POSITION, 0, 0, test_char_y, font);
+    draw_tile(tile, renderer, RIGHT_RIGHT_POSITION, 0, 1, test_char_o, font);
+    draw_tile(tile, renderer, WRONG, 0, 2, test_char_y, font);
+    draw_tile(tile, renderer, WRONG, 0, 3, test_char_o, font);
+    draw_tile(tile, renderer, RIGHT_RIGHT_POSITION, 0, 4, test_char_y, font);
 
     for (uint8_t row = 1; row < 6; row++) {
       for (uint8_t column = 0; column < 5; column++) {
-        draw_tile(&tile, renderer, BLANK, row, column, NULL, NULL);
+        draw_tile(tile, renderer, BLANK, row, column, NULL, NULL);
       }
     }
+
+    */
     //draw_tile(tile, renderer, RIGHT_RIGHT_POSITION, 0, 0, test_char, font);
     SDL_RenderPresent(renderer);
   }
 
+  // Free up memory
+  free(game_ptr);
+  free(tile);
+
 
 }
 
+void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font) {
+  // Guess structure:
+  char* text = (char*)calloc(2, sizeof(char));
+  text[1] = '\0';
 
+  for(uint8_t letter = 0; letter < 5; letter++) {
+    text[0] = guess->guessed_word[letter];
+    draw_tile(tile, renderer, guess->guess_scoring[letter], row, letter, text, font);
+  }
+
+  // Free up the memory
+  free(text);  
+}
 
 
 void draw_rect(SDL_Renderer* renderer) {
@@ -203,21 +228,13 @@ void draw_rect(SDL_Renderer* renderer) {
 
 void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type type, uint8_t row, uint8_t column, char* letter, TTF_Font* font) {
 
-  // Positioning as follows:
-  // 240px of height for aspect ratio of one
-  // 6 rows - Make 9 rows with one row of pixels shared between the rows
-  // 240px / 10 = 24
-  // Rows numbered from 0-5
-
-  // Columns
-  // 135px / 9 = 15
-  // 2 columns either side, with
-
+  // Figures out where we need to draw the tile, based off of the row and column
   tile->x = (7 + (column * 28)) * CURDLE_WINDOW_SCALE;
   tile->y = (48 + (row * 28)) * CURDLE_WINDOW_SCALE;
   tile->w = 24 * CURDLE_WINDOW_SCALE;
   tile->h = 24 * CURDLE_WINDOW_SCALE;
 
+  // Sets the background colour
   switch (type)
   {
   case BLANK:
@@ -243,6 +260,7 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
   SDL_SetRenderDrawColor(renderer, 255, 255, 255 ,255);
   SDL_RenderDrawRect(renderer, tile);
 
+  // If we are rendering a blank tile then we can ignore rendering text onto it
   if (type == WRONG || type == RIGHT_WRONG_POSITION || type == RIGHT_RIGHT_POSITION) {
     // Render the character on top of the thing
     SDL_Color text_colour = {CURDLE_TEXT_COLOUR_R, CURDLE_TEXT_COLOUR_G, CURDLE_TEXT_COLOUR_B, 255};
