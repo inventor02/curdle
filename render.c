@@ -125,12 +125,14 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
         // Game logic goes here
 
           if (event.key.keysym.sym == SDLK_KP_ENTER) {
+            printf("enter pressed\n");
             append_guess(game_ptr);
             reset_guess(game_ptr);
             game.guesses_so_far++;
 
 
           }else if (event.key.keysym.sym >= SDL_SCANCODE_A && event.key.keysym.sym <= SDL_SCANCODE_Z) {
+            printf("letter pressed\n");
             append_letter(game_ptr, key_to_char(event.key.keysym.sym));
           }
 

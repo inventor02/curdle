@@ -98,6 +98,7 @@ struct guess guess_comparator(struct game *game) {
 }
 
 void append_letter(struct game *game, char current_letter){
+  printf("append_letter\n");
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
     if(game->current_guess[i] == 0){
       game->current_guess[i] = current_letter;
@@ -107,11 +108,13 @@ void append_letter(struct game *game, char current_letter){
 }
 
 void reset_guess(struct game *game){
+  printf("reset_guess\n");
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
     game->current_guess[i] = 0;
   }
 }
 
 void append_guess(struct game *game){
+  printf("append_guess\n");
   game->guesses[game->guesses_so_far] = guess_comparator(game);
 }
