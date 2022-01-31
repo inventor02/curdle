@@ -103,7 +103,7 @@ void append_letter(struct game *game, char current_letter){
   printf("%s\n", game->current_guess);
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
     printf("%i\n", i);
-    printf("%s\n", game->current_guess[i]); // SEGFAULT
+    printf("%s\n", game->current_guess[i]); // SEGFAULT whenever current_guess is accessed
     if(game->current_guess[i] == 0){
       printf("In IF\n");
       game->current_guess[i] = current_letter;
