@@ -53,9 +53,13 @@ struct game game_init(char *word) {
 void game_destroy(struct game *game) {
   assert(game != NULL);
   assert(game->guesses != NULL);
+  assert(game->current_guess != NULL);
 
   free(game->guesses);
   game->guesses = NULL;
+
+  free(game->current_guess);
+  game->current_guess = NULL;
 
   free(game);
 }
