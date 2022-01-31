@@ -7,7 +7,17 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define CURDLE_STATISTICS_FILE_PATH "~/.curdle/curdle_statistics"
+#if defined(BSD) || defined(__linux__)
+#define CURDLE_STATISTICS_FILE_PATH "~/.curdle/statistics.curd"
+#endif
+
+#if defined(__APPLE__)
+#define CURDLE_STATISTICS_FILE_PATH "~/Library/Application Support/curdle/statistics.curd"
+#endif
+
+#if defined(_WIN32)
+#define CURDLE_STATISTICS_FILE_PATH "%LocalAppData%/curdle/statistics.curd"
+#endif
 
 struct game_statistics {
   time_t start_time;
