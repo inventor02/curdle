@@ -101,6 +101,8 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
   // Create our event
   SDL_Event event;
   struct game game = game_init(get_today_word());
+  struct game *game_ptr = &game;
+  reset_guess(game_ptr);
 
   /**
    * USED FOR TESTING
@@ -111,7 +113,6 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
 
 
 
-  struct game *game_ptr = &game;
   SDL_Rect rect;
   SDL_Rect* tile = &rect;
 
@@ -204,7 +205,7 @@ void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* 
   }
 
   // Free up the memory
-  free(text);  
+  free(text);
 }
 
 
