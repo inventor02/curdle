@@ -94,9 +94,14 @@ struct guess guess_comparator(struct game *game) {
       guess_scoring[i] = IN_WORD_WRONG_PLACE;
     }
   }
+
+  char *guess_text = calloc(CURDLE_WORD_LENGTH, sizeof(char));
+
+  // TODO: FREE UP ALL OF THESE ADDRESSES AT THE END OF THE PROGRAM
+  strncpy(guess_text, current_guess, 5);
   struct guess guess = {
     .guess_scoring = guess_scoring,
-    .guessed_word = current_guess
+    .guessed_word = guess_text
   };
   return guess;
 }
