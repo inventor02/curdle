@@ -151,11 +151,11 @@ void check_game_state(struct game *game){
   /// Checks if the right word was guessed
   if(strcmp(game->current_guess, game->word) == 0){
     printf("you won\n");
-    //end_game(true);
+    end_game(true);
   }
   /// Checks if all
   if(game->guesses_so_far > CURDLE_MAX_GUESSES){
-    //end_game(false);
+    end_game(false);
     printf("end game\n");
   }
   /// Check if the guess is in the guess list
