@@ -180,7 +180,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
       draw_guess(&game_ptr->guesses[guess], guess, tile, renderer, font);
     }
     // Render the current guess
-    
+
     draw_current_guess(currentGuess, tile, renderer, font, game_ptr->current_guess);
 
 
