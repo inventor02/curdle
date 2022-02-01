@@ -107,14 +107,10 @@ struct guess guess_comparator(struct game *game) {
 }
 
 void append_letter(struct game *game, char current_letter){
-  printf("append_letter\n");
-  printf("Current Letter: %c\n", current_letter);
-  printf("Current Guess: %s\n", game->current_guess);
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
-    printf("Current Loop: %i\n", i);
-    printf("Current Guess: %c\n", game->current_guess[i]); // SEGFAULT whenever current_guess is accessed
     if(game->current_guess[i] == 0){
       if(i < 6){
+        printf("append_letter\n");
         game->current_guess[i] = current_letter;
         break;
       }
@@ -131,7 +127,12 @@ void reset_guess(struct game *game){
 
 void append_guess(struct game *game){
   printf("append_guess\n");
-  game->guesses[game->guesses_so_far] = guess_comparator(game);
+  printf("Current Guess: %s\n", game->current_guess);
+  if(game->current_guess[5] != 0){
+    game->guesses[game->guesses_so_far] = guess_comparator(game);
+  } else {
+    reset_guess(game);
+  }
 }
 
 void backspace(struct game *game){
@@ -154,17 +155,18 @@ void check_game_state(struct game *game){
     end_game(true);
   }
   /// Checks if all
-  if(game->guesses_so_far > CURDLE_MAX_GUESSES){
+  else if(game->guesses_so_far > CURDLE_MAX_GUESSES){
     end_game(false);
     printf("end game\n");
   }
   /// Check if the guess is in the guess list
-  if(is_valid_guess(game->current_guess)){
+  else if(is_valid_guess(game->current_guess)){
     printf("valid entry\n");
     game->guesses_so_far++;
-  }  else {
+  } else {
     printf("invalid entry\n");
     // DO SOMETHING TO TELL USER
+    reset_guess(game);
   }
 }
 
