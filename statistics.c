@@ -110,6 +110,21 @@ struct average_statistics get_average_statistics_from_fs() {
   return stats;
 }
 
+bool save_average_statistics_to_fs(struct average_statistics *stats) {
+  stats_log("try open file to save");
+
+  FILE *fp = fopen(CURDLE_STATISTICS_FILE_PATH, "w+");
+
+  if (fp == NULL) {
+    stats_log("FATAL: cannot open file");
+    return false;
+  }
+
+  if (fwrite(stats, sizeof(struct average_statistics), 1, fp) != 1) {
+    stats_log("invalid no of stats written");
+  }
+}
+
 char *encode_bytes(char *bytes) {
   // TODO implement this
   return bytes;
@@ -138,9 +153,7 @@ bool statistics_init(struct game_statistics *stats) {
 
   stats_log("put initial struct");
   *stats = (struct game_statistics) {
-    .start_time = 0,
-    .end_time = 0,
-    .game_duration = 0,
+    0, 0, 0
   };
 
   stats_log("stats init done");
@@ -157,4 +170,43 @@ bool statistics_init(struct game_statistics *stats) {
 void statistics_start_game(struct game_statistics *stats) {
   time_t now = time(NULL);
   stats->start_time = now;
+}
+
+/**
+ * Records the end time of the game, calculates stats, and stores them.
+ *
+ * @param stats              the game statistics struct
+ * @param average_stats      the average statistics struct
+ * @param number_of_guesses  the number of guesses taken
+ * @param was_word_guessed   whether the word was guessed
+ */
+void statistics_end_game(struct game_statistics *stats,
+  struct average_statistics *average_stats,
+  uint8_t number_of_guesses, bool was_word_guessed) {
+  stats_log("game ended");
+
+  time_t now = time(NULL);
+  stats->end_time = now;
+
+  stats->game_duration_secs = difftime(now, stats->start_time);
+
+  stats_log("work out averages");
+
+  average_stats->number_of_games_played++;
+
+  if (was_word_guessed) {
+    average_stats->number_of_games_won++;
+  }
+
+  average_stats->guess_number_totals[number_of_guesses - 1]++;
+
+  average_stats->average_time_secs = ((average_stats->average_time_secs *
+    average_stats->number_of_games_played) + stats->game_duration_secs) /
+    average_stats->number_of_games_played;
+
+  stats_log("try and save");
+  if(!save_average_statistics_to_fs(average_stats)) {
+    stats_log("cannot save!");
+  }
+  stats_log("saved stats");
 }
