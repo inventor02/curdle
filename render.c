@@ -134,7 +134,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
         printf("KEY CODE: %i\n", event.key.keysym.sym);
         // Game logic goes here
 
-          if (event.key.keysym.sym == SDLK_KP_ENTER) {
+          if (event.key.keysym.sym == /*SDLK_KP_ENTER*/13) {
             printf("enter pressed\n");
             append_guess(game_ptr);
             reset_guess(game_ptr);
@@ -178,7 +178,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
       draw_guess(&game_ptr->guesses[guess], guess, tile, renderer, font);
     }
     // Render the current guess
-    
+
     draw_current_guess(currentGuess, tile, renderer, font, game_ptr->current_guess);
 
 
