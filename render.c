@@ -4,7 +4,7 @@
 #include "game.h"
 #include "words.h"
 #include <stdint.h>
-void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font)
+void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font);
 int start_window() {
 
   // Create our window pointer
@@ -187,10 +187,6 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
     //draw_tile(tile, renderer, RIGHT_RIGHT_POSITION, 0, 0, test_char, font);
     SDL_RenderPresent(renderer);
   }
-
-  // Free up memory
-  free(game_ptr);
-  free(tile);
 
 
 }
