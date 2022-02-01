@@ -127,3 +127,15 @@ void append_guess(struct game *game){
   printf("append_guess\n");
   game->guesses[game->guesses_so_far] = guess_comparator(game);
 }
+
+void backspace(struct game *game){
+  printf("backspace\n");
+  if(game->current_guess[0] != 0){
+    for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
+      if(game->current_guess[i] == 0){
+        game->current_guess[i-1] = 0;
+        break;
+      }
+    }
+  }
+}
