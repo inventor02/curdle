@@ -210,3 +210,12 @@ void statistics_end_game(struct game_statistics *stats,
   }
   stats_log("saved stats");
 }
+
+/**
+ * Frees up memory used by the statistics module, ready for the program to exit.
+ *
+ * @param stats  the statistics structure
+ */
+void statistics_destroy(struct game_statistics *stats) {
+  free(stats);
+}
