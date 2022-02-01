@@ -177,6 +177,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
 
     // Loop through the guesses
     for (uint8_t guess = 0; guess < currentGuess; guess++) {
+      printf("WORD (%i): %s\n", guess, game_ptr->guesses[guess].guessed_word);
       draw_guess(&game_ptr->guesses[guess], guess, tile, renderer, font);
     }
     // Render the current guess
