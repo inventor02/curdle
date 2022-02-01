@@ -56,7 +56,7 @@ int start_window() {
   // Render Text??
 
   // Load font style and set size
-  TTF_Font* curdle_font = TTF_OpenFont("../res/Roboto-Black.ttf", 256);
+  TTF_Font* curdle_font = TTF_OpenFont("../res/Roboto-Black.ttf", 18 * CURDLE_WINDOW_SCALE);
 
   // Load custom text colour
   SDL_Color curdle_font_colour = {CURDLE_TEXT_COLOUR_R, CURDLE_TEXT_COLOUR_G, CURDLE_TEXT_COLOUR_B, 255};
@@ -295,10 +295,25 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
 
     // Adjust the bounds of the letter so it doesn't stretch it out over the entire tile which looks ugly
 
-    tile->x += 2 * CURDLE_WINDOW_SCALE;
-    tile->y -= 2 * CURDLE_WINDOW_SCALE;
-    tile->w -= 4 * CURDLE_WINDOW_SCALE;
-    tile->h += 4 * CURDLE_WINDOW_SCALE;
+    int w, h;
+    uint16_t diff_x, diff_y;
+    float aspect_ratio;
+
+    if (TTF_SizeText(font, letter, &w, &h)) {
+      printf("Error 'rendering' the string: %s\n", SDL_GetError());
+    } else {
+      // Figure out aspect ratio
+
+      diff_x = tile->w - w;
+      diff_y = tile->h - h;
+
+      printf("Character: %s, width: %i, height: %i, tile width: %i, tile height: %i\n", letter, w, h, tile->w, tile->h);
+    }
+
+    tile->x += diff_x / 2;
+    tile->y -= diff_y / 2;
+    tile->w -= diff_x;
+    tile->h += diff_y;
 
     SDL_RenderCopy(renderer, texture_text, NULL, tile);
 
