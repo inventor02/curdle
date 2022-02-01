@@ -184,24 +184,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
     for (uint8_t i = currentGuess; i < 6; i++) {
       draw_blank_row(i, tile, renderer);
     }
-    // Render test tile?
-    /*
-    char test_char_y[2] = {'Y','\0'};
-    char test_char_o[2] = {'O', '\0'};
-    draw_tile(tile, renderer, RIGHT_WRONG_POSITION, 0, 0, test_char_y, font);
-    draw_tile(tile, renderer, RIGHT_RIGHT_POSITION, 0, 1, test_char_o, font);
-    draw_tile(tile, renderer, WRONG, 0, 2, test_char_y, font);
-    draw_tile(tile, renderer, WRONG, 0, 3, test_char_o, font);
-    draw_tile(tile, renderer, RIGHT_RIGHT_POSITION, 0, 4, test_char_y, font);
-
-    for (uint8_t row = 1; row < 6; row++) {
-      for (uint8_t column = 0; column < 5; column++) {
-        draw_tile(tile, renderer, BLANK, row, column, NULL, NULL);
-      }
-    }
-
-    */
-    //draw_tile(tile, renderer, RIGHT_RIGHT_POSITION, 0, 0, test_char, font);
+    
     SDL_RenderPresent(renderer);
   }
 
