@@ -302,12 +302,10 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
     if (TTF_SizeText(font, letter, &w, &h)) {
       printf("Error 'rendering' the string: %s\n", SDL_GetError());
     } else {
-      // Figure out aspect ratio
 
       diff_x = tile->w - w;
       diff_y = tile->h - h;
 
-      printf("Character: %s, width: %i, height: %i, tile width: %i, tile height: %i\n", letter, w, h, tile->w, tile->h);
     }
 
     tile->x += diff_x / 2;
