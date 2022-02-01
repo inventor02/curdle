@@ -21,6 +21,13 @@ statistics.curd file format
 #include <unistd.h>
 #include <assert.h>
 
+struct average_statistics default_stats = {
+  0,
+  0,
+  0,
+  0,
+};
+
 /**
  * Prints a log message to STDOUT.
  *
@@ -59,16 +66,7 @@ bool create_file_if_not_exists() {
       return false;
     }
 
-    uint32_t *guess_number_totals = calloc(CURDLE_MAX_GUESSES, sizeof(uint32_t));
-
-    struct average_statistics default = {
-      NULL,
-      *guess_number_totals,
-      0,
-      0,
-    };
-
-    if (fwrite(&default, sizeof(struct average_statistics), 1, fp) != 1) {
+    if (fwrite(&default_stats, sizeof(struct average_statistics), 1, fp) != 1) {
       stats_log("FATAL: wrong number of items written");
       return false;
     }
@@ -93,7 +91,7 @@ struct average_statistics get_average_statistics_from_fs() {
 
   if (fp == NULL) {
     stats_log("FATAL: cannot open statistics file");
-    return NULL;
+    return default_stats;
   }
 
   struct average_statistics *in = malloc(sizeof(struct average_statistics));
@@ -101,7 +99,7 @@ struct average_statistics get_average_statistics_from_fs() {
 
   if (fread(in, sizeof(struct average_statistics), 1, fp) != 1) {
     stats_log("FATAL: wrong number of items read");
-    return NULL;
+    return default_stats;
   }
 
   struct average_statistics stats = *in;
