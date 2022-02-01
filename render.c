@@ -4,7 +4,12 @@
 #include "game.h"
 #include "words.h"
 #include <stdint.h>
+
+// Private method decleration
 void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font);
+void draw_blank_row(uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer);
+void draw_current_guess(uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font, char* word);
+
 int start_window() {
 
   // Create our window pointer
@@ -150,6 +155,12 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
 
 
 
+    int currentGuess = game_ptr->guesses_so_far;
+    if (currentGuess > 5) {
+      // We are finished
+    }
+
+
     // Render Logic Goes Here
 
 
@@ -162,11 +173,21 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
     // Clear window
     SDL_RenderClear(renderer);
 
+
     // Loop through the guesses
-    for (uint8_t guess = 0; guess < game_ptr->guesses_so_far; guess++) {
+    for (uint8_t guess = 0; guess < currentGuess; guess++) {
       draw_guess(&game_ptr->guesses[guess], guess, tile, renderer, font);
     }
+    // Render the current guess
+    
+    draw_current_guess(currentGuess, tile, renderer, font, game_ptr->current_guess);
 
+
+    currentGuess++;
+    // Render the blank rows
+    for (uint8_t i = currentGuess; i < 6; i++) {
+      draw_blank_row(i, tile, renderer);
+    }
     // Render test tile?
     /*
     char test_char_y[2] = {'Y','\0'};
@@ -203,6 +224,27 @@ void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* 
 
   // Free up the memory
   free(text);
+}
+
+void draw_blank_row(uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer) {
+  for (uint8_t i = 0; i < 5; i++) {
+    draw_tile(tile, renderer, BLANK, row, i, NULL, NULL);
+  }
+}
+
+void draw_current_guess(uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font, char* word) {
+  uint8_t letter = 0;
+  for (;letter < 5; letter++) {
+    if (word[letter] != '\0') {
+      draw_tile(tile, renderer, WRONG, row, letter, &word[letter], font);
+    } else {
+      break;
+    }
+  }
+
+  for (;letter < 5; letter++) {
+    draw_tile(tile, renderer, BLANK, row, letter, NULL, NULL);
+  }
 }
 
 
