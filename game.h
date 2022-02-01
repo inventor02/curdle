@@ -45,4 +45,6 @@ void backspace(struct game *game);
 
 void check_game_state(struct game *game);
 
+void end_game(bool game_won);
+
 #endif // CURDLE_GAME_H

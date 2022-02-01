@@ -166,6 +166,6 @@ void check_game_state(struct game *game){
     printf("invalid entry\n");
     // DO SOMETHING TO TELL USER
   }
-
-
 }
+
+void end_game(bool game_won){}
