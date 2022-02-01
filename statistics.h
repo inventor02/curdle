@@ -22,11 +22,11 @@
 struct game_statistics {
   time_t start_time;
   time_t end_time;
-  time_t game_duration;
+  double game_duration_secs;
 };
 
 struct average_statistics {
-  time_t average_time;
+  double average_time_secs;
   uint32_t guess_number_totals[CURDLE_MAX_GUESSES];
   uint32_t number_of_games_played;
   uint32_t number_of_games_won;
@@ -40,6 +40,6 @@ void statistics_end_game(struct game_statistics *stats,
   struct average_statistics *average_stats,
   uint8_t number_of_guesses, bool was_word_guessed);
 
-void statistics_destroy();
+void statistics_destroy(struct game_statistics *stats);
 
 #endif
