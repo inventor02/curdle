@@ -167,6 +167,8 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
     // Clear window
     SDL_RenderClear(renderer);
 
+    uint8_t currentGuess = game_ptr->guesses_so_far;
+
 
     // Loop through the guesses
     for (uint8_t guess = 0; guess < currentGuess; guess++) {
