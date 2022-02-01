@@ -146,8 +146,12 @@ void backspace(struct game *game){
 }
 
 void check_game_state(struct game *game){
+  printf("%s\n", game->current_guess);
   if(game->guesses_so_far > 6){
     //end_game();
     printf("end game\n");
+  }
+  if(strcmp(game->current_guess, game->word) == 0){
+    printf("you won\n");
   }
 }
