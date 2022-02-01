@@ -130,5 +130,31 @@ char *decode_bytes(char *bytes) {
  * @returns      whether the logic was initialised successfully
  */
 bool statistics_init(struct game_statistics *stats) {
+  stats_log("hello, init statistics");
 
+  if (!create_file_if_not_exists()) {
+    return false;
+  }
+
+  stats_log("put initial struct");
+  *stats = (struct game_statistics) {
+    .start_time = 0,
+    .end_time = 0,
+    .game_duration = 0,
+  };
+
+  stats_log("stats init done");
+  return true;
+}
+
+/**
+ * Records the start time of the game.
+ *
+ * The game starts when the first guess has been submitted.
+ *
+ * @param stats  the statistics structure to record data in
+ */
+void statistics_start_game(struct game_statistics *stats) {
+  time_t now = time(NULL);
+  stats->start_time = now;
 }
