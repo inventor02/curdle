@@ -45,7 +45,7 @@ struct game game_init(char *word) {
     .guesses = calloc(CURDLE_MAX_GUESSES, sizeof(struct guess)),
     .guesses_so_far = 0,
     .word = word,
-    .current_guess = malloc(CURDLE_WORD_LENGTH)
+    .current_guess = calloc(CURDLE_WORD_LENGTH, sizeof(char)),
   };
   return game;
 }
