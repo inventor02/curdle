@@ -26,6 +26,7 @@ struct game {
   char *word;
   struct guess *guesses;
   char *current_guess;
+  bool game_ended;
 };
 
 char key_to_char(SDL_Keycode keycode);
