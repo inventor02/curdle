@@ -2,6 +2,7 @@
 #define CURDLE_GAME_H
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <SDL2/SDL.h>
 
 #define CURDLE_EPOCH 1643068800
