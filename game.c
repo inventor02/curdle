@@ -129,6 +129,7 @@ void append_guess(struct game *game){
   printf("append_guess\n");
   printf("Current Guess: %s\n", game->current_guess);
   if(game->current_guess[5] != 0){
+    printf("olasjfoisadfouhsahudaushduoihasdhou");
     game->guesses[game->guesses_so_far] = guess_comparator(game);
   } else {
     reset_guess(game);
@@ -151,13 +152,11 @@ void check_game_state(struct game *game){
   printf("%s\n", game->current_guess);
   /// Checks if the right word was guessed
   if(strcmp(game->current_guess, game->word) == 0){
-    printf("you won\n");
     end_game(true);
   }
   /// Checks if all
   else if(game->guesses_so_far > CURDLE_MAX_GUESSES){
     end_game(false);
-    printf("end game\n");
   }
   /// Check if the guess is in the guess list
   else if(is_valid_guess(game->current_guess)){
@@ -170,4 +169,11 @@ void check_game_state(struct game *game){
   }
 }
 
-void end_game(bool game_won){}
+void end_game(bool game_won){
+  if(game_won){
+    printf("You Won!\n");
+  } else {
+    printf("You lost\n");
+  }
+  printf("Game Over\n");
+}

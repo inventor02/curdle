@@ -138,6 +138,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
             printf("enter pressed\n");
             append_guess(game_ptr);
             if(game_ptr->current_guess[5] != 0){
+              printf("a");
               check_game_state(game_ptr);
               reset_guess(game_ptr);
             }
