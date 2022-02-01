@@ -134,16 +134,19 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
         printf("KEY CODE: %i\n", event.key.keysym.sym);
         // Game logic goes here
 
-          if (event.key.keysym.sym == SDLK_KP_ENTER) {
+          if (event.key.keysym.sym == SDLK_RETURN) {
             printf("enter pressed\n");
             append_guess(game_ptr);
             reset_guess(game_ptr);
             game.guesses_so_far++;
+            //check_game_state(game_ptr);
 
 
           }else if (event.key.keysym.sym >= 97 && event.key.keysym.sym <= 122) {
             printf("letter pressed\n");
             append_letter(game_ptr, key_to_char(event.key.keysym.sym));
+          } else if (event.key.keysym.sym == SDLK_BACKSPACE) {
+            backspace(game_ptr);
           }
 
 
@@ -175,10 +178,11 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
 
     // Loop through the guesses
     for (uint8_t guess = 0; guess < currentGuess; guess++) {
+      printf("WORD (%i): %s\n", guess, game_ptr->guesses[guess].guessed_word);
       draw_guess(&game_ptr->guesses[guess], guess, tile, renderer, font);
     }
     // Render the current guess
-    
+
     draw_current_guess(currentGuess, tile, renderer, font, game_ptr->current_guess);
 
 
@@ -217,7 +221,7 @@ void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* 
   text[1] = '\0';
 
   for(uint8_t letter = 0; letter < 5; letter++) {
-    text[0] = guess->guessed_word[letter];
+    text[0] = toupper(guess->guessed_word[letter]);
     draw_tile(tile, renderer, guess->guess_scoring[letter], row, letter, text, font);
   }
 
@@ -233,13 +237,18 @@ void draw_blank_row(uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer) {
 
 void draw_current_guess(uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font, char* word) {
   uint8_t letter = 0;
+  char* text = (char*)calloc(2, sizeof(char));
+  text[1] = '\0';
   for (;letter < 5; letter++) {
     if (word[letter] != '\0') {
-      draw_tile(tile, renderer, WRONG, row, letter, &word[letter], font);
+      text[0] = toupper(word[letter]);
+      draw_tile(tile, renderer, WRONG, row, letter, text, font);
     } else {
       break;
     }
   }
+
+  free(text);
 
   for (;letter < 5; letter++) {
     draw_tile(tile, renderer, BLANK, row, letter, NULL, NULL);

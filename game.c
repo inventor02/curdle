@@ -103,11 +103,11 @@ struct guess guess_comparator(struct game *game) {
 
 void append_letter(struct game *game, char current_letter){
   printf("append_letter\n");
-  printf("%c\n", current_letter);
-  printf("%s\n", game->current_guess);
+  printf("Current Letter: %c\n", current_letter);
+  printf("Current Guess: %s\n", game->current_guess);
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
-    printf("%i\n", i);
-    printf("%s\n", game->current_guess[i]); // SEGFAULT whenever current_guess is accessed
+    printf("Current Loop: %i\n", i);
+    printf("Current Guess: %c\n", game->current_guess[i]); // SEGFAULT whenever current_guess is accessed
     if(game->current_guess[i] == 0){
       printf("In IF\n");
       game->current_guess[i] = current_letter;
@@ -126,4 +126,16 @@ void reset_guess(struct game *game){
 void append_guess(struct game *game){
   printf("append_guess\n");
   game->guesses[game->guesses_so_far] = guess_comparator(game);
+}
+
+void backspace(struct game *game){
+  printf("backspace\n");
+  if(game->current_guess[0] != 0){
+    for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
+      if(game->current_guess[i] == 0){
+        game->current_guess[i-1] = 0;
+        break;
+      }
+    }
+  }
 }
