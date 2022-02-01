@@ -114,9 +114,10 @@ void append_letter(struct game *game, char current_letter){
     printf("Current Loop: %i\n", i);
     printf("Current Guess: %c\n", game->current_guess[i]); // SEGFAULT whenever current_guess is accessed
     if(game->current_guess[i] == 0){
-      printf("In IF\n");
-      game->current_guess[i] = current_letter;
-      break;
+      if(i < 6){
+        game->current_guess[i] = current_letter;
+        break;
+      }
     }
   }
 }
@@ -147,11 +148,24 @@ void backspace(struct game *game){
 
 void check_game_state(struct game *game){
   printf("%s\n", game->current_guess);
-  if(game->guesses_so_far > 6){
-    //end_game();
-    printf("end game\n");
-  }
+  /// Checks if the right word was guessed
   if(strcmp(game->current_guess, game->word) == 0){
     printf("you won\n");
+    //end_game(true);
   }
+  /// Checks if all
+  if(game->guesses_so_far > CURDLE_MAX_GUESSES){
+    //end_game(false);
+    printf("end game\n");
+  }
+  /// Check if the guess is in the guess list
+  if(is_valid_guess(game->current_guess)){
+    printf("valid entry\n");
+    game->guesses_so_far++;
+  }  else {
+    printf("invalid entry\n");
+    // DO SOMETHING TO TELL USER
+  }
+
+
 }
