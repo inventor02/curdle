@@ -134,7 +134,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
         printf("KEY CODE: %i\n", event.key.keysym.sym);
         // Game logic goes here
 
-          if (event.key.keysym.sym == SDLK_KP_ENTER) {
+          if (event.key.keysym.sym == SDLK_RETURN) {
             printf("enter pressed\n");
             append_guess(game_ptr);
             reset_guess(game_ptr);
@@ -144,7 +144,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
           }else if (event.key.keysym.sym >= 97 && event.key.keysym.sym <= 122) {
             printf("letter pressed\n");
             append_letter(game_ptr, key_to_char(event.key.keysym.sym));
-          } else if (event.key.keysym.sym == SDLK_KP_BACKSPACE) {
+          } else if (event.key.keysym.sym == SDLK_BACKSPACE) {
             
           }
 

@@ -106,13 +106,8 @@ void append_letter(struct game *game, char current_letter){
   printf("Current Letter: %c\n", current_letter);
   printf("Current Guess: %s\n", game->current_guess);
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
-<<<<<<< Updated upstream
-    printf("%i\n", i);
-    printf("%c\n", game->current_guess[i]); // SEGFAULT
-=======
     printf("Current Loop: %i\n", i);
     printf("Current Guess: %c\n", game->current_guess[i]); // SEGFAULT whenever current_guess is accessed
->>>>>>> Stashed changes
     if(game->current_guess[i] == 0){
       printf("In IF\n");
       game->current_guess[i] = current_letter;
