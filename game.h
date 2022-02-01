@@ -43,4 +43,6 @@ struct guess guess_comparator(struct game *game);
 
 void backspace(struct game *game);
 
+void check_game_state(struct game *game);
+
 #endif // CURDLE_GAME_H

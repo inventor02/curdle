@@ -139,3 +139,10 @@ void backspace(struct game *game){
     }
   }
 }
+
+void check_game_state(struct game *game){
+  if(game->guesses_so_far > 6){
+    //end_game();
+    printf("end game\n");
+  }
+}
