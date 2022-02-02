@@ -49,7 +49,6 @@ struct game game_init(char *word) {
     .game_ended = false,
     .game_won = false,
   };
-  printf("%d\n", strncmp("hi", "hi", 2*sizeof(char)));
   return game;
 }
 
