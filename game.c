@@ -45,7 +45,7 @@ struct game game_init(char *word) {
     .guesses = calloc(CURDLE_MAX_GUESSES, sizeof(struct guess)),
     .guesses_so_far = 0,
     .word = word,
-    .current_guess = calloc(CURDLE_WORD_LENGTH, sizeof(char)),
+    .current_guess = calloc(CURDLE_WORD_LENGTH+1, sizeof(char)),
     .game_ended = false,
     .game_won = false,
   };
@@ -121,7 +121,8 @@ void reset_guess(struct game *game){
 void append_guess(struct game *game){
   printf("append_guess\n");
   printf("Current Guess: %s\n", game->current_guess);
-  if(game->current_guess[CURDLE_WORD_LENGTH-1] != 0){
+  if(game->current_guess[CURDLE_WORD_LENGTH-1] != '\0'){
+    game->current_guess[CURDLE_WORD_LENGTH] = 0;
     game->guesses[game->guesses_so_far] = guess_comparator(game);
   } else {
     reset_guess(game);
