@@ -15,4 +15,6 @@ char *get_today_word();
 
 bool is_valid_guess(char *word);
 
+void score_guess(enum guessed_letter_type *scoring_ptr, char *guess, char *correct_word);
+
 #endif //CURDLE_WORDS_H
