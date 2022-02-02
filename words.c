@@ -58,6 +58,19 @@ void score_guess(enum guessed_letter_type *scoring_ptr, char *guess, char *corre
   assert(scoring_ptr != NULL);
 
   for (uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
-    
+    char search_char = correct_word[i];
+    char *location = strchr(guess, search_char);
+
+    if (location == NULL) {
+      scoring_ptr[i] = NOT_IN_WORD;
+    }
+
+    uint8_t index = correct_word - location;
+
+    if (index == i) {
+      scoring_ptr[i] = IN_WORD_WRONG_PLACE;
+    } else {
+      scoring_ptr[i] = IN_WORD_WRONG_PLACE;
+    }
   }
 }
