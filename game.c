@@ -86,16 +86,7 @@ struct guess guess_comparator(struct game *game) {
   char *word = game->word;
   char *current_guess = game->current_guess;
   enum guessed_letter_type *guess_scoring = calloc(CURDLE_WORD_LENGTH, sizeof(enum guessed_letter_type));
-  for (uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
-    int8_t index = index_of(word, current_guess[i]);
-    if (index == -1) {
-      guess_scoring[i] = NOT_IN_WORD;
-    } else if (word[index] == current_guess[i]) {
-      guess_scoring[i] = IN_WORD_RIGHT_PLACE;
-    } else {
-      guess_scoring[i] = IN_WORD_WRONG_PLACE;
-    }
-  }
+  score_guess(guess_scoring, game->current_guess, game->word);
 
   char *guess_text = calloc(CURDLE_WORD_LENGTH, sizeof(char));
 

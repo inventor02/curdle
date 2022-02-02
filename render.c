@@ -145,7 +145,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
               }
             }
 
-          }else if (event.key.keysym.sym >= 97 && event.key.keysym.sym <= 122) {
+          } else if (event.key.keysym.sym >= 97 && event.key.keysym.sym <= 122) {
             printf("letter pressed\n");
             append_letter(game_ptr, key_to_char(event.key.keysym.sym));
           } else if (event.key.keysym.sym == SDLK_BACKSPACE) {
