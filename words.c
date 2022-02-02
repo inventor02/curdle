@@ -36,7 +36,11 @@ char *get_today_word() {
 bool is_valid_guess(char *word) {
   bool found = false;
   for (uint32_t i; !found && i < CURDLE_GUESS_LIST_LENGTH; i++) {
+<<<<<<< HEAD
     if (strncmp(word, possible_guess_words[i], CURDLE_WORD_LENGTH * sizeof(char)) == 0) {
+=======
+    if (strncmp(word, possible_guess_words[i], CURDLE_WORD_LENGTH * sizeof(char))) {
+>>>>>>> 499309a511a5d895c2788f455856e77894159778
       found = true;
     }
   }
