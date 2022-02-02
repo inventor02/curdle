@@ -139,21 +139,27 @@ void append_guess(struct game *game){
 
 void backspace(struct game *game){
   printf("backspace\n");
+  bool deleted = false;
   if(game->current_guess[0] != 0){
     for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
       if(game->current_guess[i] == 0){
         game->current_guess[i-1] = 0;
+        deleted = true;
         break;
       }
     }
+    if(!deleted){
+      game->current_guess[CURDLE_WORD_LENGTH - 1] = 0;
+    }
   }
+  printf("New Current Guess: %s\n", game->current_guess);
 }
 
 void check_game_state(struct game *game){
   printf("\n\nCurrent Guess: %s\n", game->current_guess);
   printf("%d\n", is_valid_guess(game->current_guess));
   /// Checks if the right word was guessed
-  if(strncmp(game->current_guess, game->word, (CURDLE_WORD_LENGTH * sizeof(char))) == 0){
+  if(strncmp(game->current_guess, game->word, CURDLE_WORD_LENGTH) == 0){
     game->game_ended = true;
     end_game(game, true);
   }
