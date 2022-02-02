@@ -63,7 +63,7 @@ void game_destroy(struct game *game) {
   free(game->current_guess);
   game->current_guess = NULL;
 
-  free(game);
+  //free(game); // CAUSES double free error
 }
 
 /**
