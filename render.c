@@ -67,6 +67,9 @@ int start_window() {
   // Convert the surface into a texture
   SDL_Texture* texture_text = SDL_CreateTextureFromSurface(renderer, surface_text);
 
+  // Create Logo Texture
+
+
   // Create a rectangle to render the text to
   SDL_Rect text_rect;
   text_rect.x = 0;
