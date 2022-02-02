@@ -131,7 +131,8 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
         break;
       } else if (event.type == SDL_KEYDOWN) {
 
-        printf("KEY CODE: %i\n", event.key.keysym.sym);
+        if(!game_ptr->game_ended){
+          printf("KEY CODE: %i\n", event.key.keysym.sym);
         // Game logic goes here
 
           if (event.key.keysym.sym == SDLK_RETURN) {
@@ -139,7 +140,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
             append_guess(game_ptr);
             if(game_ptr->current_guess[CURDLE_WORD_LENGTH-1] != 0){
               check_game_state(game_ptr);
-              if(game_ptr->game_ended == false){
+              if(game_ptr->game_ended == false && game_ptr->current_guess[CURDLE_WORD_LENGTH-1] != 0){
                 reset_guess(game_ptr);
               }
             }
@@ -150,6 +151,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
           } else if (event.key.keysym.sym == SDLK_BACKSPACE) {
             backspace(game_ptr);
           }
+        }
 
 
 
