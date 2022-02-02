@@ -72,14 +72,14 @@ void score_guess(enum guessed_letter_type *scoring_ptr, char *guess, char *corre
 
     if (location == NULL) {
       scoring_ptr[i] = NOT_IN_WORD;
-    }
-
-    uint8_t index = correct_word - location;
-
-    if (index == i) {
-      scoring_ptr[i] = IN_WORD_RIGHT_PLACE;
     } else {
-      scoring_ptr[i] = IN_WORD_WRONG_PLACE;
+      uint8_t index = correct_word - location;
+
+      if (index == i) {
+        scoring_ptr[i] = IN_WORD_RIGHT_PLACE;
+      } else {
+        scoring_ptr[i] = IN_WORD_WRONG_PLACE;
+      }
     }
   }
 }
