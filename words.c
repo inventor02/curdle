@@ -81,6 +81,6 @@ void score_guess(enum guessed_letter_type *scoring_ptr, char *guess, char *corre
         scoring_ptr[i] = IN_WORD_WRONG_PLACE;
       }
     }
-    printf("%d\n", scoring_ptr[i]);
+    printf("%c vs %c: %d\n", guess[i], correct_word[i], scoring_ptr[i]);
   }
 }
