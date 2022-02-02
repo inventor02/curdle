@@ -153,7 +153,7 @@ void backspace(struct game *game){
 void check_game_state(struct game *game){
   printf("%s\n", game->current_guess);
   /// Checks if the right word was guessed
-  if(strcmp(game->current_guess, game->word) == 0){
+  if(strncmp(game->current_guess, game->word, (CURDLE_WORD_LENGTH * sizeof(char))) == 0){
     game->game_ended = true;
     end_game(game, true);
   }
