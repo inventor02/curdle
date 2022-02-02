@@ -76,7 +76,7 @@ void score_guess(enum guessed_letter_type *scoring_ptr, char *guess, char *corre
       printf("not in the word\n");
       scoring_ptr[i] = NOT_IN_WORD;
     } else {
-      uint8_t index = correct_word - location;
+      uint8_t index = location - correct_word;
       printf("index: %d\n", index);
 
       if (index == i) {
