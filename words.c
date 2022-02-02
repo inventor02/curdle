@@ -67,13 +67,17 @@ void score_guess(enum guessed_letter_type *scoring_ptr, char *guess, char *corre
   assert(scoring_ptr != NULL);
 
   for (uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
-    char search_char = correct_word[i];
-    char *location = strchr(guess, search_char);
+    char search_char = guess[i];
+    printf("searching for %c\n", search_char);
+
+    char *location = strchr(correct_word, search_char);
 
     if (location == NULL) {
+      printf("not in the word\n");
       scoring_ptr[i] = NOT_IN_WORD;
     } else {
-      uint8_t index = guess - location;
+      uint8_t index = correct_word - location;
+      printf("index: %d\n", index);
 
       if (index == i) {
         scoring_ptr[i] = IN_WORD_RIGHT_PLACE;
