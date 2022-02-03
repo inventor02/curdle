@@ -2,6 +2,7 @@
 #define CURDLE_RENDER_H
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <stdint.h>
 #include "game.h"
 
@@ -13,6 +14,8 @@
 
 #define CURDLE_TEXT_FONT "./res/Roboto-Black.ttf"
 #define CURDLE_TEXT_SIZE 96
+
+#define CURDLE_LOGO_PATH = "./res/Curdle.png"
 
 #define CURDLE_SDL_INITILISATION_FAILURE 1
 #define CURDLE_SDL_WINDOW_FAILURE 2
@@ -50,7 +53,7 @@ void draw_rect(SDL_Renderer* renderer);
  * @param font the font we are using for our tiles
  * @return int the error code of the program
  */
-int event_poll(SDL_Window *window, SDL_Renderer *renderer, TTF_Font* font);
+int event_poll(SDL_Window *window, SDL_Renderer *renderer, TTF_Font* font, SDL_Texture* logo_texture);
 
 /**
  * Draws a tile to the specified row and column, taking into account the window scale

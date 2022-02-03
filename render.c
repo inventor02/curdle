@@ -23,6 +23,7 @@ int start_window() {
   }
 
   TTF_Init();
+  IMG_Init(IMG_INIT_PNG);
 
   // Create a window centered on the screen with set width and height
   window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 150 * CURDLE_WINDOW_SCALE, 240 * CURDLE_WINDOW_SCALE, 0);
@@ -53,6 +54,7 @@ int start_window() {
 
 
 
+
   // Render Text??
 
   // Load font style and set size
@@ -61,43 +63,32 @@ int start_window() {
   // Load custom text colour
   SDL_Color curdle_font_colour = {CURDLE_TEXT_COLOUR_R, CURDLE_TEXT_COLOUR_G, CURDLE_TEXT_COLOUR_B, 255};
 
-  // Create a surface to render the text onto?
-  SDL_Surface* surface_text = TTF_RenderText_Solid( curdle_font, "hello world", curdle_font_colour);
-
-  // Convert the surface into a texture
-  SDL_Texture* texture_text = SDL_CreateTextureFromSurface(renderer, surface_text);
-
   // Create Logo Texture
 
-
-  // Create a rectangle to render the text to
-  SDL_Rect text_rect;
-  text_rect.x = 0;
-  text_rect.y = 0;
-  text_rect.w = 600;
-  text_rect.h = 100;
-
-  SDL_RenderCopy(renderer, texture_text, NULL, &text_rect);
-
-  draw_rect(renderer);
-
-  SDL_FreeSurface(surface_text);
-  SDL_DestroyTexture(texture_text);
+  SDL_Surface* logo_surface = IMG_Load("../res/Curdle.png");
+  SDL_Texture* logo_texture = SDL_CreateTextureFromSurface(renderer, logo_surface);
 
 
 
 
-  event_poll(window, renderer, curdle_font);
+  event_poll(window, renderer, curdle_font, logo_texture);
 
 
   // Close and destroy the window and renderer
   SDL_DestroyWindow(window);
   SDL_DestroyRenderer(renderer);
 
+  // Free up resources
+  SDL_FreeSurface(logo_surface);
+  SDL_DestroyTexture(logo_texture);
+
   // Close the font
   TTF_CloseFont(curdle_font);
 
   TTF_Quit();
+
+  // Close the image handling
+  IMG_Quit();
 
   // Call SDL quite before application closes to safely shut down subsystems
   SDL_Quit();
@@ -105,7 +96,7 @@ int start_window() {
   return EXIT_SUCCESS;
 }
 
-int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
+int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_Texture* logo_texture) {
 
   // Create our event
   SDL_Event event;
@@ -174,6 +165,20 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font) {
 
     // Clear window
     SDL_RenderClear(renderer);
+
+
+    // Render the logo //
+
+    // Transform the rect to the correct position
+    tile->x = 0;
+    tile->y = 2 * CURDLE_WINDOW_SCALE;
+    tile->w = 150 * CURDLE_WINDOW_SCALE;
+    tile->h = 50 * CURDLE_WINDOW_SCALE;
+
+    SDL_RenderCopy(renderer, logo_texture, NULL, tile);
+    
+
+    /////////////////////
 
     uint8_t currentGuess = game_ptr->guesses_so_far;
 
@@ -262,7 +267,7 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
 
   // Figures out where we need to draw the tile, based off of the row and column
   tile->x = (7 + (column * 28)) * CURDLE_WINDOW_SCALE;
-  tile->y = (48 + (row * 28)) * CURDLE_WINDOW_SCALE;
+  tile->y = (52 + (row * 28)) * CURDLE_WINDOW_SCALE;
   tile->w = 24 * CURDLE_WINDOW_SCALE;
   tile->h = 24 * CURDLE_WINDOW_SCALE;
 
