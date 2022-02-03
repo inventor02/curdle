@@ -130,6 +130,9 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
         // Game logic goes here
           if (event.key.keysym.sym == SDLK_ESCAPE) {
             // Close the game
+
+            // TODO: Handle any game logic to do with saving here in the future
+
             break;
           } else if (event.key.keysym.sym == SDLK_RETURN) {
             printf("enter pressed\n");
