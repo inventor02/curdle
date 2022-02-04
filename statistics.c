@@ -45,10 +45,10 @@ void stats_log(char *message) {
 bool create_file_if_not_exists() {
   stats_log("statistics at:");
   stats_log(CURDLE_STATISTICS_FILE_PATH);
-  if (access(CURDLE_STATISTICS_FILE_PATH, F_OK)) {
+  if (access(CURDLE_STATISTICS_FILE_PATH, R_OK|W_OK) == 0) {
     stats_log("file exists, check permissions");
 
-    if (access(CURDLE_STATISTICS_FILE_PATH, R_OK|W_OK)) {
+    if (access(CURDLE_STATISTICS_FILE_PATH, R_OK|W_OK) == 0) {
       stats_log("FATAL: cannot read/write statistics file");
       return false;
     }
@@ -59,7 +59,7 @@ bool create_file_if_not_exists() {
   } else {
     stats_log("file does not exist, try create");
 
-    FILE *fp = fopen(CURDLE_STATISTICS_FILE_PATH, "r+");
+    FILE *fp = fopen(CURDLE_STATISTICS_FILE_PATH, "w+");
 
     if (fp == NULL) {
       stats_log("FATAL: cannot create file");
