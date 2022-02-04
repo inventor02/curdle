@@ -151,7 +151,7 @@ void check_game_state(struct game *game){
   printf("\n\nCurrent Guess: %s\n", game->current_guess);
   printf("%d\n", is_valid_guess(game->current_guess));
   /// Checks if the right word was guessed
-  if(strncmp(game->current_guess, game->word, CURDLE_WORD_LENGTH) == 0){
+  /*if(strncmp(game->current_guess, game->word, CURDLE_WORD_LENGTH) == 0){
     game->game_ended = true;
     end_game(game, true);
   }
@@ -168,7 +168,26 @@ void check_game_state(struct game *game){
     printf("invalid entry\n");
     // DO SOMETHING TO TELL USER
     reset_guess(game);
+  }*/
+  if(is_valid_guess(game->current_guess)){
+    printf("valid entry\n");
+    game->guesses_so_far++;
+    if(game->guesses_so_far > CURDLE_MAX_GUESSES){
+      game->game_ended = true;
+      end_game(game, false);
+    }
+    else if(strncmp(game->current_guess, game->word, CURDLE_WORD_LENGTH) == 0){
+      game->game_ended = true;
+      end_game(game, true);
+    }
+
+
+  } else {
+    printf("invalid entry\n");
+    // DO SOMETHING TO TELL USER
+    reset_guess(game);
   }
+
 }
 
 void end_game(struct game *game, bool won){
@@ -179,4 +198,5 @@ void end_game(struct game *game, bool won){
     printf("You lost\n");
   }
   printf("Game Over\n");
+  printf("%d\n", game->guesses_so_far);
 }
