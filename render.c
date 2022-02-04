@@ -125,16 +125,18 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
         break;
       } else if (event.type == SDL_KEYDOWN) {
 
-        if(!game_ptr->game_ended){
-          printf("KEY CODE: %i\n", event.key.keysym.sym);
-        // Game logic goes here
-          if (event.key.keysym.sym == SDLK_ESCAPE) {
+        if (event.key.keysym.sym == SDLK_ESCAPE) {
             // Close the game
 
             // TODO: Handle any game logic to do with saving here in the future
 
             break;
-          } else if (event.key.keysym.sym == SDLK_RETURN) {
+        }
+
+        if(!game_ptr->game_ended){
+          printf("KEY CODE: %i\n", event.key.keysym.sym);
+        // Game logic goes here
+        else if (event.key.keysym.sym == SDLK_RETURN) {
             printf("enter pressed\n");
             append_guess(game_ptr);
             if(game_ptr->current_guess[CURDLE_WORD_LENGTH-1] != 0){
