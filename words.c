@@ -72,6 +72,8 @@ bool is_valid_guess(char *word) {
  */
 void score_guess(enum guessed_letter_type *scoring_ptr, char *guess, char *correct_word) {
   assert(scoring_ptr != NULL);
+  assert(guess[CURDLE_WORD_LENGTH] == 0);
+  assert(correct_word[CURDLE_WORD_LENGTH] == 0);
 
   for (uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
     char search_char = guess[i];
