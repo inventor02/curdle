@@ -13,7 +13,7 @@
 enum guessed_letter_type {
   NOT_IN_WORD,
   IN_WORD_WRONG_PLACE,
-  IN_WORD_RIGHT_PLACE
+  IN_WORD_RIGHT_PLACE,
 };
 
 struct guess {

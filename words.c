@@ -66,6 +66,8 @@ bool is_valid_guess(char *word) {
 /**
  * Scores a guess.
  *
+ * With thanks to https://github.com/hannahcode/word-guessing-game/blob/main/src/lib/statuses.ts for control flow details.
+ *
  * @param scoring_ptr  a pointer to a memory location with enough memory to store CURDLE_WORD_LENGTH * sizeof(enum guesssed_letter_type)
  * @param guess        the string literal representing the guess
  * @param correct_word the string literal representing the correct word
@@ -73,44 +75,60 @@ bool is_valid_guess(char *word) {
 void score_guess(enum guessed_letter_type *scoring_ptr, char *guess, char *correct_word) {
   printf("[ scoring ]\n");
 
+  // check that everything is in the correct format and that it exists
   assert(scoring_ptr != NULL);
   assert(guess[CURDLE_WORD_LENGTH] == 0);
   assert(correct_word[CURDLE_WORD_LENGTH] == 0);
 
-  bool *consumed_chars = calloc(CURDLE_WORD_LENGTH, sizeof(bool));
-  assert(consumed_chars != NULL);
+  // initialise some tracking variables
+  bool *chars_used = calloc(CURDLE_WORD_LENGTH, sizeof(bool));
+  bool *chars_scored = calloc(CURDLE_WORD_LENGTH, sizeof(bool));
+  assert(chars_used != NULL);
+  assert(chars_scored != NULL);
 
+  // handle letters in the correct place
   for (uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
-    char search_char = guess[i];
-    printf("search %c in %s (correct word is %c): ", search_char, guess, correct_word);
-
-    char *location = strchr(correct_word, search_char);
-
-    if (location == NULL) {
-      printf("not in word\n");
-      scoring_ptr[i] = NOT_IN_WORD;
-    } else {
-      uint8_t index = location - correct_word;
-      printf("in word, ");
-
-      if (!consumed_chars[index]) {
-        consumed_chars[index] = true;
-
-        if (index == i) {
-          printf("right place\n");
-          scoring_ptr[i] = IN_WORD_RIGHT_PLACE;
-        } else {
-          printf("wrong place\n");
-          scoring_ptr[i] = IN_WORD_WRONG_PLACE;
-        }
-      } else {
-        printf("already consumed\n");
-      }
+    if (guess[i] == correct_word[i]) {
+      scoring_ptr[i] = IN_WORD_RIGHT_PLACE;
+      chars_used[i] = true;
+      chars_scored[i] = true;
     }
   }
 
-  free(consumed_chars);
-  consumed_chars = NULL;
+  // now handle the rest
+  for (uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
+    // if we've already scored the letter, don't bother
+    if (chars_scored[i]) continue;
+    chars_scored[i] = true;
+
+    // try and find the location of the letter in the solution
+    char *target = strchr(correct_word, guess[i]);
+
+    // if it's not in the word at all
+    if (target == NULL) {
+      scoring_ptr[i] = NOT_IN_WORD;
+      continue;
+    }
+
+    // now we get the index of the character
+    uint8_t target_index = target - correct_word;
+
+    // check if the character's already been "consumed"
+    if (chars_used[target_index]) {
+      scoring_ptr[i] = NOT_IN_WORD;
+    // otherwise, it's there somewhere
+    } else {
+      chars_used[target_index] = true;
+      scoring_ptr[i] = IN_WORD_WRONG_PLACE;
+    }
+  }
+
+  // clean up
+  free(chars_used);
+  chars_used = NULL;
+
+  free(chars_scored);
+  chars_scored = NULL;
 
   printf("[ end scoring ]\n");
 }
