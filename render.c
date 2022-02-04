@@ -137,7 +137,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
             printf("KEY CODE: %i\n", event.key.keysym.sym);
           }
           // Game logic goes here
-          else if (event.key.keysym.sym == SDLK_RETURN) {
+          if (event.key.keysym.sym == SDLK_RETURN) {
               printf("enter pressed\n");
               append_guess(game_ptr);
               if(game_ptr->current_guess[CURDLE_WORD_LENGTH-1] != 0){
