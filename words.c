@@ -52,6 +52,13 @@ bool is_valid_guess(char *word) {
       found = true;
     }
   }
+  if (!found) {
+    for (uint16_t i = 0; !found && i < CURDLE_WORD_LIST_LENGTH; i++) {
+      if (strncmp(word, words[i], CURDLE_WORD_LENGTH) == 0) {
+         found = true;
+      }
+    }
+  }
 
   return found;
 }
