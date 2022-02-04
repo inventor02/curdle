@@ -135,30 +135,28 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
 
           if(!game_ptr->game_ended){
             printf("KEY CODE: %i\n", event.key.keysym.sym);
-          }
-          // Game logic goes here
-          if (event.key.keysym.sym == SDLK_RETURN) {
-              printf("enter pressed\n");
-              append_guess(game_ptr);
-              if(game_ptr->current_guess[CURDLE_WORD_LENGTH-1] != 0){
-                check_game_state(game_ptr);
-                if(game_ptr->game_ended == false && game_ptr->current_guess[CURDLE_WORD_LENGTH-1] != 0){
-                  reset_guess(game_ptr);
+
+            // Game logic goes here
+            if (event.key.keysym.sym == SDLK_RETURN) {
+                printf("enter pressed\n");
+                append_guess(game_ptr);
+                if(game_ptr->current_guess[CURDLE_WORD_LENGTH-1] != 0){
+                  check_game_state(game_ptr);
+                  if(!game_ptr->game_ended){
+                    reset_guess(game_ptr);
+                  }
                 }
+
+              } else if (event.key.keysym.sym >= 97 && event.key.keysym.sym <= 122) {
+                  printf("letter pressed\n");
+                  append_letter(game_ptr, key_to_char(event.key.keysym.sym));
+              } else if (event.key.keysym.sym == SDLK_BACKSPACE) {
+                  backspace(game_ptr);
               }
-
-            } else if (event.key.keysym.sym >= 97 && event.key.keysym.sym <= 122) {
-              printf("letter pressed\n");
-              append_letter(game_ptr, key_to_char(event.key.keysym.sym));
-            } else if (event.key.keysym.sym == SDLK_BACKSPACE) {
-              backspace(game_ptr);
-            }
           }
-
+      }
         // Ask for the latest current word and update the graphics accordingly
-      
     }
-
 
     // Render Logic Goes Here
 
@@ -182,12 +180,14 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
     tile->h = 50 * CURDLE_WINDOW_SCALE;
 
     SDL_RenderCopy(renderer, logo_texture, NULL, tile);
-    
+
 
     /////////////////////
 
     uint8_t currentGuess = game_ptr->guesses_so_far;
-
+    if(currentGuess >= CURDLE_MAX_GUESSES){
+      continue;
+    }
 
     // Loop through the guesses
     for (uint8_t guess = 0; guess < currentGuess; guess++) {
