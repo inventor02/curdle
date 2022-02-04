@@ -172,7 +172,7 @@ void check_game_state(struct game *game){
   if(is_valid_guess(game->current_guess)){
     printf("valid entry\n");
     game->guesses_so_far++;
-    if(game->guesses_so_far >= CURDLE_MAX_GUESSES){
+    if(game->guesses_so_far > CURDLE_MAX_GUESSES){
       game->game_ended = true;
       end_game(game, false);
     }
@@ -194,10 +194,10 @@ void end_game(struct game *game, bool won){
   game->game_won = won;
   if(won){
     printf("You Won!\n");
+    reset_guess(game);
   } else {
     printf("You lost\n");
   }
   printf("Game Over\n");
   printf("%d\n", game->guesses_so_far);
-  reset_guess(game);
 }

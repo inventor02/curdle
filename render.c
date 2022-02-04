@@ -214,7 +214,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
 
     currentGuess++;
     // Render the blank rows
-    for (uint8_t i = currentGuess; i < 6; i++) {
+    for (uint8_t i = currentGuess; i < CURDLE_MAX_GUESSES; i++) {
       draw_blank_row(i, tile, renderer);
     }
 
