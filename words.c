@@ -71,29 +71,46 @@ bool is_valid_guess(char *word) {
  * @param correct_word the string literal representing the correct word
  */
 void score_guess(enum guessed_letter_type *scoring_ptr, char *guess, char *correct_word) {
+  printf("[ scoring ]\n");
+
   assert(scoring_ptr != NULL);
   assert(guess[CURDLE_WORD_LENGTH] == 0);
   assert(correct_word[CURDLE_WORD_LENGTH] == 0);
 
+  bool *consumed_chars = calloc(CURDLE_WORD_LENGTH, sizeof(bool));
+  assert(consumed_chars != NULL);
+
   for (uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++) {
     char search_char = guess[i];
-    printf("searching for %c\n", search_char);
+    printf("search %c in %s (correct word is %c): ", search_char, guess, correct_word);
 
     char *location = strchr(correct_word, search_char);
 
     if (location == NULL) {
-      printf("not in the word\n");
+      printf("not in word\n");
       scoring_ptr[i] = NOT_IN_WORD;
     } else {
       uint8_t index = location - correct_word;
-      printf("index: %d\n", index);
+      printf("in word, ");
 
-      if (index == i) {
-        scoring_ptr[i] = IN_WORD_RIGHT_PLACE;
+      if (!consumed_chars[index]) {
+        consumed_chars[index] = true;
+
+        if (index == i) {
+          printf("right place\n");
+          scoring_ptr[i] = IN_WORD_RIGHT_PLACE;
+        } else {
+          printf("wrong place\n");
+          scoring_ptr[i] = IN_WORD_WRONG_PLACE;
+        }
       } else {
-        scoring_ptr[i] = IN_WORD_WRONG_PLACE;
+        printf("already consumed\n");
       }
     }
-    printf("%c vs %c: %d\n", guess[i], correct_word[i], scoring_ptr[i]);
   }
+
+  free(consumed_chars);
+  consumed_chars = NULL;
+
+  printf("[ end scoring ]\n");
 }
