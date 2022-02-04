@@ -74,7 +74,10 @@ int start_window() {
 
 
 
-  event_poll(window, renderer, curdle_font, logo_texture);
+  uint8_t render_status = event_poll(window, renderer, curdle_font, logo_texture);
+  if (render_status != 0) {
+    return render_status;
+  }
 
 
   // Close and destroy the window and renderer
@@ -113,6 +116,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
 
   if (!statistics_init(game_stats_ptr)) {
     printf("Error initialising statistics\n");
+    return CURDLE_STATISTICS_FILE_ERROR;
   }
 
   statistics_start_game(game_stats_ptr);
@@ -238,6 +242,8 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
   }
 
   statistics_destroy(game_stats_ptr);
+
+  return 0;
 
 
 }
