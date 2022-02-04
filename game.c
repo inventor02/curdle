@@ -199,4 +199,5 @@ void end_game(struct game *game, bool won){
   }
   printf("Game Over\n");
   printf("%d\n", game->guesses_so_far);
+  reset_guess(game);
 }
