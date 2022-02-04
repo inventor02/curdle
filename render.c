@@ -42,6 +42,9 @@ int start_window() {
     return CURDLE_SDL_RENDERER_FAILURE;
   }
 
+  // Use Blending
+  SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
 
   // Get the currentPath
 
@@ -102,6 +105,17 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
   SDL_Event event;
   struct game game = game_init(get_today_word());
   struct game *game_ptr = &game;
+
+  // Initialise the statistics object
+
+  struct game_statistics game_stats;
+  struct game_statistics* game_stats_ptr = &game_stats;
+
+  if (!statistics_init(game_stats_ptr)) {
+    printf("Error initialising statistics\n");
+  }
+
+  statistics_start_game(game_stats_ptr);
 
   /**
    * USED FOR TESTING
@@ -204,8 +218,26 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
       draw_blank_row(i, tile, renderer);
     }
 
+    if (game_ptr->game_ended) {
+
+      // Render the statistics gui
+      // More tile abuse
+
+
+      // Darken the background
+      tile->x = 0;
+      tile->y = 0;
+      tile->w = 150 * CURDLE_WINDOW_SCALE;
+      tile->h = 240 * CURDLE_WINDOW_SCALE;
+      SDL_SetRenderDrawColor(renderer, 0, 0, 0, 192);
+
+      SDL_RenderFillRect(renderer, tile);
+    }
+
     SDL_RenderPresent(renderer);
   }
+
+  statistics_destroy(game_stats_ptr);
 
 
 }

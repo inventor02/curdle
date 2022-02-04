@@ -4,7 +4,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include "game.h"
+#include "statistics.h"
 
 #define CURDLE_WINDOW_SCALE 4
 
@@ -20,6 +22,7 @@
 #define CURDLE_SDL_INITILISATION_FAILURE 1
 #define CURDLE_SDL_WINDOW_FAILURE 2
 #define CURDLE_SDL_RENDERER_FAILURE 3
+#define CURDLE_STATISTICS_FILE_ERROR 4
 
 enum rectangle_draw_type {
   WRONG,
