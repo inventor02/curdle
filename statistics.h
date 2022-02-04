@@ -8,7 +8,7 @@
 #include <stdbool.h>
 
 #if defined(BSD) || defined(__linux__)
-#define CURDLE_STATISTICS_FILE_PATH "~/.curdle/statistics.curd"
+#define CURDLE_STATISTICS_FILE_PATH "/tmp/curdle/statistics.curd"
 #endif
 
 #if defined(__APPLE__)
