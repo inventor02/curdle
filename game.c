@@ -172,6 +172,7 @@ void check_game_state(struct game *game){
   if(is_valid_guess(game->current_guess)){
     printf("valid entry\n");
     game->guesses_so_far++;
+    printf("guesses_so_far %d\n", game->guesses_so_far);
     if(game->guesses_so_far > CURDLE_MAX_GUESSES){
       game->game_ended = true;
       end_game(game, false);
