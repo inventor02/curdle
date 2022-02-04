@@ -215,7 +215,7 @@ void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* 
   char* text = (char*)calloc(2, sizeof(char));
   text[1] = '\0';
 
-  for(uint8_t letter = 0; letter < 5; letter++) {
+  for(uint8_t letter = 0; letter < CURDLE_WORD_LENGTH; letter++) {
     text[0] = toupper(guess->guessed_word[letter]);
     draw_tile(tile, renderer, guess->guess_scoring[letter], row, letter, text, font);
   }
