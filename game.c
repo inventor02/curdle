@@ -193,6 +193,7 @@ void check_game_state(struct game *game){
 
 void end_game(struct game *game, bool won){
   game->game_won = won;
+  printf("guesses_so_far %d\n", game->guesses_so_far);
   if(won){
     printf("You Won!\n");
     reset_guess(game);
