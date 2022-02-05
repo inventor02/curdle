@@ -121,6 +121,8 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
 
   statistics_start_game(game_stats_ptr);
 
+  char buffer[1024];
+
   /**
    * USED FOR TESTING
    *
@@ -236,6 +238,23 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 192);
 
       SDL_RenderFillRect(renderer, tile);
+
+
+      // Render the statistics
+      // Create a colour for the text
+      SDL_Color text_colour = {255, 255, 255, 255};
+
+      snprintf(buffer, sizeof(buffer), "Time: %lfs", game_stats_ptr->game_duration_secs);
+      // Create the relevant surface and texture to render the text to screen
+      SDL_Surface* text_surface = TTF_RenderText_Solid(font, buffer, text_colour);
+      SDL_Texture* text_texture = SDL_CreateTextureFromSurface(renderer, text_surface);
+
+      // TODO: Render the text somewhere
+
+      // Free up texture and surface once we are done
+      SDL_DestroyTexture(text_texture);
+      SDL_FreeSurface(text_surface);
+
     }
 
     SDL_RenderPresent(renderer);
