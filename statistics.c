@@ -274,6 +274,4 @@ void statistics_end_game(struct game_statistics *stats,
 void statistics_destroy(struct game_statistics *stats) {
   free(stats_file_path);
   stats_file_path = NULL;
-
-  free(stats);
 }
