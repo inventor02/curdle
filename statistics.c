@@ -14,12 +14,15 @@ statistics.curd file format
 
 #include "game.h"
 
+#include <string.h>
 #include <time.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <assert.h>
+#include <sys/types.h>
+#include <pwd.h>
 
 struct average_statistics default_stats = {
   0,
@@ -28,6 +31,8 @@ struct average_statistics default_stats = {
   0,
 };
 
+char *stats_file_path;
+
 /**
  * Prints a log message to STDOUT.
  *
@@ -35,6 +40,58 @@ struct average_statistics default_stats = {
  */
 void stats_log(char *message) {
   printf("[curdle:statistics] %s\n", message);
+}
+
+bool init_stats_file_path() {
+  stats_log("initialise the path to the stats file");
+  stats_file_path = calloc(FILENAME_MAX, sizeof(char));
+
+  // We check the home directory location depending on the operating system.
+  // The char *file_path must always be set after every execution.
+  // If nothing works, then that is very sad, and we will return false.
+  // If it does work, we will set the global char *stats_file_path and return true.
+  // Why is this so complex!?!??!?!?!?
+
+#if defined(__APPLE__)
+  stats_log("running in apple mode");
+  // TODO implement this
+#endif
+
+#if defined(__linux__) || defined(BSD)
+  stats_log("running in linux mode");
+
+  stats_log("try and use HOME environment variable");
+  char *file_path = getenv("HOME");
+
+  // the HOME environment variable is not always set
+  if (file_path == NULL) {
+    stats_log("HOME environment variable not set so read passwd");
+    file_path = getpwuid(getuid())->pw_dir;
+  }
+
+  // if home_dir is still NULL then give up
+  if (file_path == NULL) {
+    stats_log("unable to get a home directory, giving up");
+    return false;
+  }
+
+  char *stats_file_name = CURDLE_STATISTICS_FILE_NAME;
+
+  strcat(file_path, "/.curdle/");
+  strcat(file_path, stats_file_name);
+
+  stats_log("full file path is");
+  printf("%s\n", file_path);
+#endif
+
+#if defined(_WIN32)
+  stats_log("running in windows mode");
+  // TODO implement this
+#endif
+
+  *stats_file_path = *file_path;
+
+  stats_log("path to file initialised");
 }
 
 /**
@@ -146,6 +203,8 @@ char *decode_bytes(char *bytes) {
  */
 bool statistics_init(struct game_statistics *stats) {
   stats_log("hello, init statistics");
+
+  init_stats_file_path();
 
   if (!create_file_if_not_exists()) {
     return false;
