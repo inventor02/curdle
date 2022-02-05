@@ -22,6 +22,7 @@ statistics.curd file format
 #include <unistd.h>
 #include <assert.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <pwd.h>
 #include <errno.h>
 
@@ -79,6 +80,15 @@ bool init_stats_file_path() {
   char *stats_file_name = CURDLE_STATISTICS_FILE_NAME;
 
   strcat(file_path, "/.curdle/");
+
+  // Try and create the directory for the statistics files
+  // If the folder does not exist, and creation is successful, we're good
+  // If the folder does not exist and can't be created then this sets an error code, which we could
+  // catch, but it will fail later anyway
+  // If the folder does exist, this also sets an error code, but the rest of it will work fine so
+  // there is no need to do anything
+  mkdir(file_path, 0700);
+
   strcat(file_path, stats_file_name);
 
   stats_log("full file path is");
