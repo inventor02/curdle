@@ -23,6 +23,7 @@ statistics.curd file format
 #include <assert.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <errno.h>
 
 struct average_statistics default_stats = {
   0,
@@ -89,9 +90,11 @@ bool init_stats_file_path() {
   // TODO implement this
 #endif
 
-  *stats_file_path = *file_path;
+  strcpy(stats_file_path, file_path);
 
   stats_log("path to file initialised");
+  printf("%s\n", stats_file_path);
+  return true;
 }
 
 /**
@@ -100,26 +103,19 @@ bool init_stats_file_path() {
  * @return whether the operation was successful
  */
 bool create_file_if_not_exists() {
-  stats_log("statistics at:");
-  stats_log(CURDLE_STATISTICS_FILE_PATH);
-  if (access(CURDLE_STATISTICS_FILE_PATH, R_OK|W_OK) == 0) {
+  if (access(stats_file_path, R_OK|W_OK) == 0) {
     stats_log("file exists, check permissions");
-
-    if (access(CURDLE_STATISTICS_FILE_PATH, R_OK|W_OK) == 0) {
-      stats_log("FATAL: cannot read/write statistics file");
-      return false;
-    }
-
     // TODO check the file is in a valid format
     stats_log("file exists, all good");
     return true;
   } else {
     stats_log("file does not exist, try create");
 
-    FILE *fp = fopen(CURDLE_STATISTICS_FILE_PATH, "w+");
+    FILE *fp = fopen(stats_file_path, "w+");
 
     if (fp == NULL) {
       stats_log("FATAL: cannot create file");
+      printf("%s\n", strerror(errno));
       return false;
     }
 
@@ -144,7 +140,7 @@ bool create_file_if_not_exists() {
 struct average_statistics get_average_statistics_from_fs() {
   stats_log("trying to open file to get stats");
 
-  FILE *fp = fopen(CURDLE_STATISTICS_FILE_PATH, "r+");
+  FILE *fp = fopen(stats_file_path, "r+");
 
   if (fp == NULL) {
     stats_log("FATAL: cannot open statistics file");
@@ -170,7 +166,7 @@ struct average_statistics get_average_statistics_from_fs() {
 bool save_average_statistics_to_fs(struct average_statistics *stats) {
   stats_log("try open file to save");
 
-  FILE *fp = fopen(CURDLE_STATISTICS_FILE_PATH, "w+");
+  FILE *fp = fopen(stats_file_path, "w+");
 
   if (fp == NULL) {
     stats_log("FATAL: cannot open file");
@@ -180,16 +176,6 @@ bool save_average_statistics_to_fs(struct average_statistics *stats) {
   if (fwrite(stats, sizeof(struct average_statistics), 1, fp) != 1) {
     stats_log("invalid no of stats written");
   }
-}
-
-char *encode_bytes(char *bytes) {
-  // TODO implement this
-  return bytes;
-}
-
-char *decode_bytes(char *bytes) {
-  // TODO implement this
-  return bytes;
 }
 
 /**
@@ -276,5 +262,8 @@ void statistics_end_game(struct game_statistics *stats,
  * @param stats  the statistics structure
  */
 void statistics_destroy(struct game_statistics *stats) {
+  free(stats_file_path);
+  stats_file_path = NULL;
+
   free(stats);
 }
