@@ -7,8 +7,8 @@ The project team is made up of:
 - [Toby Godfrey](https://github.com/tgodfrey0)
 - [Adam Caine](https://github.com/a-caine)
 
-We're all Computer Science undergraduates at the [University of Southampton](https://ecs.soton.ac.uk) and we started this project because we
+We're all Computer Science undergraduates at the [University of Southampton](https://ecs.soton.ac.uk) and we started this project because we:
 - had a week between the end of our exams and the start of teaching for the next semester (you may notice this week has now passed, and we are still working on this...)
 - wanted something to do
-- we wanted practice with the C programming language (and by extent it's graphics libraries)
+- wanted practice with the C programming language (and by extent it's graphics libraries)
 
