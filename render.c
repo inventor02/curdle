@@ -135,6 +135,10 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
   SDL_Rect rect;
   SDL_Rect* tile = &rect;
 
+  uint8_t endgame_animation_status = STOPPED;
+  uint8_t endgame_animation_alpha = 0;
+  uint32_t endgame_animation_last_update = SDL_GetTicks();
+
   while (1) {
     // Poll events
     if (SDL_PollEvent(&event)) {
@@ -221,7 +225,36 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
       draw_blank_row(i, tile, renderer);
     }
 
-    if (game_ptr->game_ended) {
+    // If the game has just ended start the animation
+    if (game_ptr->game_ended && endgame_animation_status == STOPPED && endgame_animation_alpha ==0) {
+      endgame_animation_status = IN_PROGRESS;
+      endgame_animation_last_update = SDL_GetTicks();
+      printf("Animation Started! Time: %i\n", endgame_animation_last_update);
+    }
+
+    // handle the animation stuff
+    if (endgame_animation_status == IN_PROGRESS) {
+      // We want the animation to take roughly 1 second, which is 1000 milliseconds
+      // During this time we want to increase a value from 0 to 192
+      // This means we want to update this value roughly every 1000 / 192 milliseconds
+      // Which is approximately 1000 / 200 which is every 5 milliseconds
+      uint32_t current_tick = SDL_GetTicks();
+      if (current_tick >= endgame_animation_last_update + 5) {
+        // Figure out how many frames of animation to jump due to lower refresh rate monitors
+
+        endgame_animation_alpha += (current_tick - endgame_animation_last_update) / 5;
+        // printf("Tick (%i), Time taken for tick: %i\n", endgame_animation_alpha, current_tick - endgame_animation_last_update);
+        endgame_animation_last_update = current_tick;
+        // If we have reached our desired value then we want to stop the animation
+        if (endgame_animation_alpha >= 192) {
+          endgame_animation_alpha = 192;
+          endgame_animation_status = STOPPED;
+          printf("Animation Ended! Time: %i\n", endgame_animation_last_update);
+        }
+      }
+    }
+
+    if (game_ptr->game_ended && endgame_animation_alpha > 0) {
 
       // Render the statistics gui
       // More tile abuse
@@ -232,7 +265,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
       tile->y = 0;
       tile->w = 150 * CURDLE_WINDOW_SCALE;
       tile->h = 240 * CURDLE_WINDOW_SCALE;
-      SDL_SetRenderDrawColor(renderer, 0, 0, 0, 192);
+      SDL_SetRenderDrawColor(renderer, 0, 0, 0, endgame_animation_alpha);
 
       SDL_RenderFillRect(renderer, tile);
 
