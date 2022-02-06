@@ -1,6 +1,6 @@
 # curdle
 
-**Curdle** is a daily word guessing game similar in nature to a popular game which is web-based. Curdle is written in C, using SDL2 (and related libraries) for graphics. We aim to make it support Linux (which it is developed on), Windows, and macOS.
+**Curdle** is a daily word guessing game similar in nature to a popular game which is web-based. Curdle is written in C, using [SDL2](https://www.libsdl.org/index.php) (and related libraries) for graphics. We aim to make it support Linux (which it is developed on), Windows, and macOS.
 
 The project team is made up of:
 - [George Peppard](https://github.com/inventor02)
