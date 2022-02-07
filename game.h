@@ -13,7 +13,11 @@
 enum guessed_letter_type {
   NOT_IN_WORD,
   IN_WORD_WRONG_PLACE,
-  IN_WORD_RIGHT_PLACE,
+  IN_WORD_RIGHT_PLACE
+};
+
+enum keyboard_letter_type {
+  NOT_CHECKED = IN_WORD_RIGHT_PLACE + 1
 };
 
 struct guess {
@@ -28,7 +32,12 @@ struct game {
   char *current_guess;
   bool game_ended;
   bool game_won;
+  enum keyboard_letter_type *alphabet_scoring;
 };
+
+void clear_alphabet_scoring(struct game *game);
+
+void score_alphabet(struct game *game);
 
 char key_to_char(SDL_Keycode keycode);
 

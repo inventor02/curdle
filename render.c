@@ -108,6 +108,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
   SDL_Event event;
   struct game game = game_init(get_today_word());
   struct game *game_ptr = &game;
+  clear_alphabet_scoring(game_ptr);
 
   // Initialise the statistics object
 
