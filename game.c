@@ -6,6 +6,8 @@
 #include <string.h>
 #include "words.h"
 
+#include "logging.h"
+
 #include "game.h"
 
 /**

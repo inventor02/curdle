@@ -5,10 +5,14 @@
 #include "game.h"
 #include "words.h"
 #include "render.h"
+#include "logging.h"
 
 int main() {
+  logging_init();
 
   start_window();
+
+  logging_destroy();
 
   return 0;
 }

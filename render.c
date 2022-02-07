@@ -4,6 +4,7 @@
 #include "game.h"
 #include "words.h"
 #include <stdint.h>
+#include "logging.h"
 
 // Private method decleration
 void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font);
@@ -26,7 +27,7 @@ int start_window() {
   IMG_Init(IMG_INIT_PNG);
 
   // Create a window centered on the screen with set width and height
-  window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 150 * CURDLE_WINDOW_SCALE, 240 * CURDLE_WINDOW_SCALE, 0);
+  window = SDL_CreateWindow("Curdle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 150 * CURDLE_WINDOW_SCALE, 272 * CURDLE_WINDOW_SCALE, 0);
 
   if (window == NULL) {
     printf("Error creating window: %s\n", SDL_GetError());
@@ -129,7 +130,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
    *
    * DELETE LATER!!!!!!!!!!!!!!
    */
-  printf("%s\n", game.word);
+  curdle_log(DEBUG, "word is: %s", game.word);
 
 
 
@@ -402,7 +403,6 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
 
     int w, h;
     uint16_t diff_x, diff_y;
-    float aspect_ratio;
 
     if (TTF_SizeText(font, letter, &w, &h)) {
       printf("Error 'rendering' the string: %s\n", SDL_GetError());
@@ -425,5 +425,10 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
     SDL_FreeSurface(surface_text);
     SDL_DestroyTexture(texture_text);
   }
+
+}
+
+void draw_small_current(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type type, uint16_t x, uint16_t y, char* letter, TTF_Font* font) {
+  // TODO: Implement this function
 
 }
