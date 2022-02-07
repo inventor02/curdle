@@ -6,6 +6,8 @@
 #include <string.h>
 #include "words.h"
 
+#include "logging.h"
+
 #include "game.h"
 
 /**
@@ -41,6 +43,8 @@ int8_t index_of(char *haystack, char needle) {
  * @return the new game structure
  */
 struct game game_init(char *word) {
+  curdle_log(INFO, "hello %s", word);
+
   struct game game = {
     .guesses = calloc(CURDLE_MAX_GUESSES, sizeof(struct guess)),
     .guesses_so_far = 0,
