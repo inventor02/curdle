@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include "game.h"
+#include "statistics.h"
 #include "words.h"
 #include <stdint.h>
 #include "logging.h"
@@ -121,7 +122,6 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
     return CURDLE_STATISTICS_FILE_ERROR;
   }
 
-  statistics_start_game(game_stats_ptr);
 
   char buffer[1024];
 
@@ -166,10 +166,18 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
             if (event.key.keysym.sym == SDLK_RETURN) {
                 printf("enter pressed\n");
                 append_guess(game_ptr);
+                if(game_ptr->guesses_so_far == 0){
+                    statistics_start_game(game_stats_ptr);
+                }
                 if(game_ptr->current_guess[CURDLE_WORD_LENGTH-1] != 0){
                   check_game_state(game_ptr);
                   if(!game_ptr->game_ended){
                     reset_guess(game_ptr);
+                  } else {
+                    struct average_statistics average_stats;
+                    statistics_end_game(game_stats_ptr, &average_stats, game_ptr->guesses_so_far, game_ptr->game_won);
+                    clogf(INFO, "Average time: %d", average_stats.average_time_secs);
+                    clogf(INFO, "Number of games won: %d", average_stats.number_of_games_won);
                   }
                 }
 

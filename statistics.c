@@ -240,6 +240,8 @@ void statistics_end_game(struct game_statistics *stats,
   uint8_t number_of_guesses, bool was_word_guessed) {
   stats_log("game ended");
 
+  *average_stats = get_average_statistics_from_fs();
+
   time_t now = time(NULL);
   stats->end_time = now;
 

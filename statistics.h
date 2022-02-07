@@ -30,7 +30,7 @@ struct game_statistics {
 };
 
 struct average_statistics {
-  double average_time_secs;
+  uint32_t average_time_secs;
   uint32_t guess_number_totals[CURDLE_MAX_GUESSES];
   uint32_t number_of_games_played;
   uint32_t number_of_games_won;
