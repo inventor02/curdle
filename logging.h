@@ -7,8 +7,8 @@
 #ifndef CURDLE_LOGGING_H
 #define CURDLE_LOGGING_H
 
-#define curdle_log(level, format, ...) __curdle_log(__func__, level, format, __VA_ARGS__)
-#define curdle_logs(level, message) __curdle_log_simple(__func__, level, message)
+#define clogf(level, format, ...) __curdle_log(__func__, level, format, __VA_ARGS__)
+#define clog(level, message) __curdle_log_simple(__func__, level, message)
 
 /** Log levels for each individual logged message. */
 enum log_level {
