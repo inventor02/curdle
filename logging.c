@@ -23,7 +23,15 @@ char *level_to_str(enum log_level level) {
   }
 }
 
+const enum log_level current_level = CURDLE_LOG_LEVEL;
+
+void logging_init() {
+  printf("[logging] logging level is %s\n", level_to_str(current_level));
+}
+
 void __curdle_log(char const *caller_func_name, enum log_level level, char *format, ...) {
+  if (level < CURDLE_LOG_LEVEL) return; // do not log stuff we don't care about
+
   printf("[%s:curdle:%s] ", level_to_str(level), caller_func_name);
 
   va_list argp;
@@ -32,5 +40,9 @@ void __curdle_log(char const *caller_func_name, enum log_level level, char *form
   va_end(argp);
 
   printf("\n");
+}
+
+void logging_destroy() {
+  // does not currently do anything
 }
 

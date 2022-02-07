@@ -27,7 +27,7 @@ int start_window() {
   IMG_Init(IMG_INIT_PNG);
 
   // Create a window centered on the screen with set width and height
-  window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 150 * CURDLE_WINDOW_SCALE, 240 * CURDLE_WINDOW_SCALE, 0);
+  window = SDL_CreateWindow("Curdle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 150 * CURDLE_WINDOW_SCALE, 240 * CURDLE_WINDOW_SCALE, 0);
 
   if (window == NULL) {
     printf("Error creating window: %s\n", SDL_GetError());
