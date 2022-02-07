@@ -50,8 +50,15 @@ struct game game_init(char *word) {
     .current_guess = calloc(CURDLE_WORD_LENGTH+1, sizeof(char)),
     .game_ended = false,
     .game_won = false,
+    .alphabet_scoring = calloc(26, sizeof(enum keyboard_letter_type)),
   };
   return game;
+}
+
+void clear_alphabet_scoring(struct game *game){
+  for(uint8_t i = 0; i < 26; i++){
+    game->alphabet_scoring[i] = NOT_CHECKED;
+  }
 }
 
 void game_destroy(struct game *game) {
@@ -175,6 +182,7 @@ void check_game_state(struct game *game){
     printf("valid entry\n");
     game->guesses_so_far++;
     printf("guesses_so_far %d\n", game->guesses_so_far);
+    score_alphabet(game);
     if(strncmp(game->current_guess, game->word, CURDLE_WORD_LENGTH) == 0){
       game->game_ended = true;
       end_game(game, true);
@@ -190,6 +198,24 @@ void check_game_state(struct game *game){
     reset_guess(game);
   }
 
+}
+
+void score_alphabet(struct game *game){
+  struct guess thisGuess = game->guesses[game->guesses_so_far-1];
+  printf("\n\nAlphabet Scoring=============\n");
+  printf("Current guess: %s\n", thisGuess.guessed_word);
+  for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
+    char thisChar = thisGuess.guessed_word[i];
+    uint8_t alphabetIndex = thisChar - 'a';
+    if(game->alphabet_scoring[alphabetIndex] == NOT_CHECKED){
+      game->alphabet_scoring[alphabetIndex] = (enum keyboard_letter_type) thisGuess.guess_scoring[i];
+    } else if(game->alphabet_scoring[alphabetIndex] < (enum keyboard_letter_type) thisGuess.guess_scoring[i]){
+      game->alphabet_scoring[alphabetIndex] = (enum keyboard_letter_type) thisGuess.guess_scoring[i];
+    }
+  }
+  for(uint8_t i = 0; i < 26; i++){
+    printf("%c: %i\n", (char) (i + 'a'), game->alphabet_scoring[i]);
+  }
 }
 
 void end_game(struct game *game, bool won){
