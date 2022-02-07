@@ -4,6 +4,7 @@
 #include "game.h"
 #include "words.h"
 #include <stdint.h>
+#include "logging.h"
 
 // Private method decleration
 void draw_guess(struct guess* guess, uint8_t row, SDL_Rect* tile, SDL_Renderer* renderer, TTF_Font* font);
@@ -128,7 +129,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
    *
    * DELETE LATER!!!!!!!!!!!!!!
    */
-  printf("%s\n", game.word);
+  curdle_log(DEBUG, "word is: %s", game.word);
 
 
 
