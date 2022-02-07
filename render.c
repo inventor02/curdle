@@ -70,7 +70,7 @@ int start_window() {
 
   // Create Logo Texture
 
-  SDL_Surface* logo_surface = IMG_Load("../res/f.jpg");
+  SDL_Surface* logo_surface = IMG_Load("../res/Curdle.png");
   SDL_Texture* logo_texture = SDL_CreateTextureFromSurface(renderer, logo_surface);
 
 
