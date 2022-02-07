@@ -42,6 +42,10 @@ void __curdle_log(char const *caller_func_name, enum log_level level, char *form
   printf("\n");
 }
 
+void __curdle_log_simple(char const *caller_func_name, enum log_level level, char *string) {
+  __curdle_log(caller_func_name, level, "%s", string);
+}
+
 void logging_destroy() {
   // does not currently do anything
 }
