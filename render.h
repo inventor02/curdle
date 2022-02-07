@@ -31,6 +31,11 @@ enum rectangle_draw_type {
   BLANK
 };
 
+enum animation_status {
+  STOPPED,
+  IN_PROGRESS
+};
+
 /**
  * Initialises SDL and draws to the window.
  *
