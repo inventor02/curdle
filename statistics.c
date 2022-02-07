@@ -258,7 +258,7 @@ void statistics_end_game(struct game_statistics *stats,
   average_stats->guess_number_totals[number_of_guesses - 1]++;
 
   average_stats->average_time_secs = ((average_stats->average_time_secs *
-    average_stats->number_of_games_played) + stats->game_duration_secs) /
+    (average_stats->number_of_games_played - 1)) + stats->game_duration_secs) /
     average_stats->number_of_games_played;
 
   stats_log("try and save");
