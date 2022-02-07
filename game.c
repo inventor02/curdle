@@ -202,8 +202,8 @@ void check_game_state(struct game *game){
 
 void score_alphabet(struct game *game){
   struct guess thisGuess = game->guesses[game->guesses_so_far-1];
-  printf("\n\nAlphabet Scoring=============\n");
-  printf("Current guess: %s\n", thisGuess.guessed_word);
+  clog(DEBUG, "\n\nAlphabet Scoring:");
+  clogf(DEBUG, "Current guess: %s\n", thisGuess.guessed_word);
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
     char thisChar = thisGuess.guessed_word[i];
     uint8_t alphabetIndex = thisChar - 'a';
@@ -214,7 +214,7 @@ void score_alphabet(struct game *game){
     }
   }
   for(uint8_t i = 0; i < 26; i++){
-    printf("%c: %i\n", (char) (i + 'a'), game->alphabet_scoring[i]);
+    clogf(DEBUG, "%c: %i", (char) (i + 'a'), game->alphabet_scoring[i]);
   }
 }
 

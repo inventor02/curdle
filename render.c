@@ -130,7 +130,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
    *
    * DELETE LATER!!!!!!!!!!!!!!
    */
-  curdle_log(DEBUG, "word is: %s", game.word);
+  clogf(DEBUG, "word is: %s", game.word);
 
 
 
