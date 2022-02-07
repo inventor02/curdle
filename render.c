@@ -27,7 +27,7 @@ int start_window() {
   IMG_Init(IMG_INIT_PNG);
 
   // Create a window centered on the screen with set width and height
-  window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 150 * CURDLE_WINDOW_SCALE, 240 * CURDLE_WINDOW_SCALE, 0);
+  window = SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 150 * CURDLE_WINDOW_SCALE, 272 * CURDLE_WINDOW_SCALE, 0);
 
   if (window == NULL) {
     printf("Error creating window: %s\n", SDL_GetError());
@@ -402,7 +402,6 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
 
     int w, h;
     uint16_t diff_x, diff_y;
-    float aspect_ratio;
 
     if (TTF_SizeText(font, letter, &w, &h)) {
       printf("Error 'rendering' the string: %s\n", SDL_GetError());
@@ -425,5 +424,10 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
     SDL_FreeSurface(surface_text);
     SDL_DestroyTexture(texture_text);
   }
+
+}
+
+void draw_small_current(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type type, uint16_t x, uint16_t y, char* letter, TTF_Font* font) {
+  // TODO: Implement this function
 
 }
