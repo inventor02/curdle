@@ -20,7 +20,7 @@ int start_window() {
 
   // Attempts to initialise SDL
   if (SDL_Init(SDL_INIT_VIDEO != 0)) {
-    printf("Error initialising SDL: %s\n", SDL_GetError());
+    clogf(FATAL, "Error initialising SDL: %s\n", SDL_GetError());
     return CURDLE_SDL_INITILISATION_FAILURE;
   }
 
@@ -31,7 +31,7 @@ int start_window() {
   window = SDL_CreateWindow("Curdle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 150 * CURDLE_WINDOW_SCALE, 272 * CURDLE_WINDOW_SCALE, 0);
 
   if (window == NULL) {
-    printf("Error creating window: %s\n", SDL_GetError());
+    clogf(FATAL, "Error creating window: %s\n", SDL_GetError());
     return CURDLE_SDL_WINDOW_FAILURE;
 
   }
@@ -40,7 +40,7 @@ int start_window() {
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
   if (renderer == NULL) {
-    printf("Error creating renderer: %s\n", SDL_GetError());
+    clogf(FATAL, "Error creating renderer: %s\n", SDL_GetError());
     return CURDLE_SDL_RENDERER_FAILURE;
   }
 
@@ -118,7 +118,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
   struct game_statistics* game_stats_ptr = &game_stats;
 
   if (!statistics_init(game_stats_ptr)) {
-    printf("Error initialising statistics\n");
+    clog(FATAL, "Error initialising statistics");
     return CURDLE_STATISTICS_FILE_ERROR;
   }
 
@@ -160,11 +160,10 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
           }
 
           if(!game_ptr->game_ended){
-            printf("KEY CODE: %i\n", event.key.keysym.sym);
+            clogf(DEBUG, "KEY CODE: %i", event.key.keysym.sym);
 
             // Game logic goes here
             if (event.key.keysym.sym == SDLK_RETURN) {
-                printf("enter pressed\n");
                 append_guess(game_ptr);
                 if(game_ptr->guesses_so_far == 0){
                     statistics_start_game(game_stats_ptr);
@@ -182,7 +181,6 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
                 }
 
               } else if (event.key.keysym.sym >= 97 && event.key.keysym.sym <= 122) {
-                  printf("letter pressed\n");
                   append_letter(game_ptr, key_to_char(event.key.keysym.sym));
               } else if (event.key.keysym.sym == SDLK_BACKSPACE) {
                   backspace(game_ptr);
@@ -239,7 +237,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
     if (game_ptr->game_ended && endgame_animation_status == STOPPED && endgame_animation_alpha ==0) {
       endgame_animation_status = IN_PROGRESS;
       endgame_animation_last_update = SDL_GetTicks();
-      printf("Animation Started! Time: %i\n", endgame_animation_last_update);
+      clogf(DEBUG, "Animation Started - Time: %i", endgame_animation_last_update);
     }
 
     // handle the animation stuff
@@ -259,7 +257,7 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
         if (endgame_animation_alpha >= 192) {
           endgame_animation_alpha = 192;
           endgame_animation_status = STOPPED;
-          printf("Animation Ended! Time: %i\n", endgame_animation_last_update);
+          clogf(DEBUG, "Animation Ended - Time: %i", endgame_animation_last_update);
         }
       }
     }
@@ -413,7 +411,7 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
     uint16_t diff_x, diff_y;
 
     if (TTF_SizeText(font, letter, &w, &h)) {
-      printf("Error 'rendering' the string: %s\n", SDL_GetError());
+      clogf(ERROR, "Error 'rendering' the string: %s\n", SDL_GetError());
     } else {
 
       diff_x = tile->w - w;

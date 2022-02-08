@@ -112,7 +112,6 @@ void append_letter(struct game *game, char current_letter){
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
     if(game->current_guess[i] == 0){
       if(i < 6){
-        printf("append_letter\n");
         game->current_guess[i] = current_letter;
         break;
       }
@@ -121,15 +120,13 @@ void append_letter(struct game *game, char current_letter){
 }
 
 void reset_guess(struct game *game){
-  printf("reset_guess\n");
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
     game->current_guess[i] = 0;
   }
 }
 
 void append_guess(struct game *game){
-  printf("append_guess\n");
-  printf("Current Guess: %s\n", game->current_guess);
+  clogf(DEBUG, "Current Guess: %s", game->current_guess);
   if(game->current_guess[CURDLE_WORD_LENGTH-1] != '\0'){
     game->current_guess[CURDLE_WORD_LENGTH] = 0;
     game->guesses[game->guesses_so_far] = guess_comparator(game);
@@ -139,7 +136,6 @@ void append_guess(struct game *game){
 }
 
 void backspace(struct game *game){
-  printf("backspace\n");
   bool deleted = false;
   if(game->current_guess[0] != 0){
     for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
@@ -153,35 +149,14 @@ void backspace(struct game *game){
       game->current_guess[CURDLE_WORD_LENGTH - 1] = 0;
     }
   }
-  printf("New Current Guess: %s\n", game->current_guess);
 }
 
 void check_game_state(struct game *game){
-  printf("\n\nCurrent Guess: %s\n", game->current_guess);
-  printf("%d\n", is_valid_guess(game->current_guess));
+  clogf(INFO, "Current guess is valid: ", "%d", is_valid_guess(game->current_guess));
   /// Checks if the right word was guessed
-  /*if(strncmp(game->current_guess, game->word, CURDLE_WORD_LENGTH) == 0){
-    game->game_ended = true;
-    end_game(game, true);
-  }
-  /// Checks if all guesses have been used
-  else if(game->guesses_so_far > CURDLE_MAX_GUESSES){
-    game->game_ended = true;
-    end_game(game, false);
-  }
-  /// Check if the guess is in the guess list
-  else if(is_valid_guess(game->current_guess)){
-    printf("valid entry\n");
-    game->guesses_so_far++;
-  } else {
-    printf("invalid entry\n");
-    // DO SOMETHING TO TELL USER
-    reset_guess(game);
-  }*/
   if(is_valid_guess(game->current_guess)){
-    printf("valid entry\n");
     game->guesses_so_far++;
-    printf("guesses_so_far %d\n", game->guesses_so_far);
+    clogf(INFO, "Guesses so far: %d", game->guesses_so_far);
     score_alphabet(game);
     if(strncmp(game->current_guess, game->word, CURDLE_WORD_LENGTH) == 0){
       game->game_ended = true;
@@ -193,7 +168,6 @@ void check_game_state(struct game *game){
 
 
   } else {
-    printf("invalid entry\n");
     // DO SOMETHING TO TELL USER
     reset_guess(game);
   }
@@ -202,8 +176,7 @@ void check_game_state(struct game *game){
 
 void score_alphabet(struct game *game){
   struct guess thisGuess = game->guesses[game->guesses_so_far-1];
-  clog(DEBUG, "\n\nAlphabet Scoring:");
-  clogf(DEBUG, "Current guess: %s\n", thisGuess.guessed_word);
+  clog(DEBUG, "Alphabet Scoring =============================");
   for(uint8_t i = 0; i < CURDLE_WORD_LENGTH; i++){
     char thisChar = thisGuess.guessed_word[i];
     uint8_t alphabetIndex = thisChar - 'a';
@@ -220,13 +193,11 @@ void score_alphabet(struct game *game){
 
 void end_game(struct game *game, bool won){
   game->game_won = won;
-  printf("guesses_so_far %d\n", game->guesses_so_far);
   if(won){
-    printf("You Won!\n");
+    clog(INFO, "You Won!");
     reset_guess(game);
   } else {
-    printf("You lost\n");
+    clog(INFO, "You lost");
   }
-  printf("Game Over\n");
-  printf("%d\n", game->guesses_so_far);
+  clog(INFO, "Game Over");
 }
