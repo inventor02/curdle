@@ -8,7 +8,6 @@
 #include "logging.h"
 
 int main() {
-  // We need soup
   logging_init();
 
   start_window();
