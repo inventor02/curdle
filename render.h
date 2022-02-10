@@ -75,6 +75,7 @@ int event_poll(SDL_Window *window, SDL_Renderer *renderer, TTF_Font* font, SDL_T
  * @param font the font used to render the letter, use NULL if drawing a blank tile
  */
 void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type type, uint8_t row, uint8_t column, char* letter, TTF_Font* font);
+
 /**
  * Draws a tile (in this case for the alphabet)
  * @param tile a rectangle object to reduce memory usage

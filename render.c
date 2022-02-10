@@ -295,6 +295,8 @@ int event_poll(SDL_Window* window, SDL_Renderer* renderer, TTF_Font* font, SDL_T
 
     }
 
+    draw_small_tile(tile, renderer, RIGHT_WRONG_POSITION, 7, 220, game_ptr->word, font);
+
     SDL_RenderPresent(renderer);
   }
 
@@ -434,7 +436,41 @@ void draw_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type 
 
 }
 
-void draw_small_current(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type type, uint16_t x, uint16_t y, char* letter, TTF_Font* font) {
+void draw_small_tile(SDL_Rect* tile, SDL_Renderer* renderer, enum rectangle_draw_type type, uint16_t x, uint16_t y, char* letter, TTF_Font* font) {
   // TODO: Implement this function
+  //
+  // Width: 171 / 10 = 17
+  // Height: 40 / 3 = 13
+
+  tile->x = x * CURDLE_WINDOW_SCALE;
+  tile->y = y * CURDLE_WINDOW_SCALE;
+  tile->h = 17 * CURDLE_WINDOW_SCALE;
+  tile->w = 13 * CURDLE_WINDOW_SCALE;
+
+  // Sets the background colour
+  switch (type)
+  {
+  case BLANK:
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    break;
+  case WRONG:
+    SDL_SetRenderDrawColor(renderer, 128, 128, 128, 255);
+    break;
+  case RIGHT_WRONG_POSITION:
+    SDL_SetRenderDrawColor(renderer, 25, 178, 255, 255);
+    break;
+  case RIGHT_RIGHT_POSITION:
+    SDL_SetRenderDrawColor(renderer, 255, 102, 128, 255);
+    break;
+
+  default:
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    break;
+  }
+
+  SDL_RenderFillRect(renderer, tile);
+  // Render the outline of the tile
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255 ,255);
+  SDL_RenderDrawRect(renderer, tile);
 
 }
